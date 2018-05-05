@@ -1,5 +1,7 @@
 package com.mygdx.values
 
+import com.mygdx.screens.ScreenManager
+
 
 // The objectives of this class is hold values that may change during the game execution but are widespread through the
 // system
@@ -10,5 +12,6 @@ object GameInfo {
     var GAME_WIDTH = Constants.BASE_GAME_WIDTH
 
     var CURRENT_STATE = Constants.MAIN_MENU_ID
+
 
 }

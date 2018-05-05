@@ -6,6 +6,7 @@ import com.mygdx.values.GameInfo
 
 class ScreenManager {
 
+    private var game : SpaceInvadersGame
     private var game_over_screen : GameOver
     private var game_running_screen : GameRunning
     private var main_menu_screen : MainMenu
@@ -14,22 +15,26 @@ class ScreenManager {
 
 
     constructor(game: SpaceInvadersGame){
-        this.game_running_screen = GameRunning(game)
-        this.game_over_screen = GameOver(game)
-        this.main_menu_screen = MainMenu(game)
-        this.pause_screen = Pause(game)
-        this.winner_screen = Winner(game)
+        this.game = game
+        this.game_running_screen = GameRunning(game, this)
+        this.game_over_screen = GameOver(game, this)
+        this.main_menu_screen = MainMenu(game, this)
+        this.pause_screen = Pause(game, this)
+        this.winner_screen = Winner(game, this)
+
     }
 
-
-    fun render(delta : Float){
-        when(GameInfo.CURRENT_STATE){
-            Constants.GAME_OVER_ID -> this.game_over_screen.render(delta)
-            Constants.GAME_RUNNING_ID -> this.game_running_screen.render(delta)
-            Constants.PAUSE_ID -> this.pause_screen.render(delta)
-            Constants.MAIN_MENU_ID -> this.main_menu_screen.render(delta)
-            Constants.WINNER_ID -> this.winner_screen.render(delta)
-        }
+    fun updateScreen(){
+        this.game.screen =
+                when(GameInfo.CURRENT_STATE){
+                    Constants.GAME_OVER_ID -> this.game_over_screen
+                    Constants.GAME_RUNNING_ID -> this.game_running_screen
+                    Constants.PAUSE_ID -> this.pause_screen
+                    Constants.MAIN_MENU_ID -> this.main_menu_screen
+                    Constants.WINNER_ID -> this.winner_screen
+                    else -> this.game.screen
+                }
     }
+
 
 }

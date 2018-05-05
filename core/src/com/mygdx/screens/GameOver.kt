@@ -7,40 +7,14 @@ import com.badlogic.gdx.graphics.Texture
 import com.mygdx.game.SpaceInvadersGame
 import com.mygdx.values.Constants
 
-class GameOver : Screen {
-    private var game: SpaceInvadersGame
-    private var bg: Texture
+class GameOver : SuperScreen {
 
-    constructor(game: SpaceInvadersGame){
-        this.game = game
-        this.bg = Texture(Constants.BG_IMG_PATH)
+    private var bg: Texture = Texture(Constants.BG_IMG_PATH)
 
-    }
-    override fun hide() {
-        TODO("not implemented")
-    }
-
-    override fun show() {
-        TODO("not implemented")
-    }
+    constructor(game: SpaceInvadersGame, manager : ScreenManager) : super(game, manager)
 
     override fun render(delta: Float) {
-        TODO("not implemented")
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun pause() {
-        TODO("not implemented")
-    }
-
-    override fun resume() {
-        TODO("not implemented")
-    }
-
-    override fun resize(width: Int, height: Int) {
-        TODO("not implemented")
-    }
-
-    override fun dispose() {
-        TODO("not implemented")
-    }
 }

@@ -4,6 +4,8 @@ import com.badlogic.gdx.Game
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.mygdx.screens.MainMenu
 import com.mygdx.screens.ScreenManager
+import com.mygdx.values.Constants
+import com.mygdx.values.GameInfo
 
 class SpaceInvadersGame : Game() {
     private lateinit var batch: SpriteBatch
@@ -11,8 +13,9 @@ class SpaceInvadersGame : Game() {
 
     override fun create() {
         batch = SpriteBatch()
-        setScreen(MainMenu(this))
         this.screens = ScreenManager(this)
+        GameInfo.CURRENT_STATE = Constants.MAIN_MENU_ID
+        this.screens.updateScreen()
     }
 
     override fun dispose() {
