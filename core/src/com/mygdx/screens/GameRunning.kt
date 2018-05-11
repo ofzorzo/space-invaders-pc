@@ -12,11 +12,10 @@ import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const
 class GameRunning : SuperScreen {
     private var bg: Texture = Texture(Constants.BG_IMG_PATH)
 
-    constructor(game: SpaceInvadersGame, manager : ScreenManager) : super(game, manager)
+    constructor(game: SpaceInvadersGame) : super(game)
+
     override fun render(delta: Float) {
-        println("running render")
-        GameInfo.CURRENT_STATE = Constants.PAUSE_ID
-        super.manager.updateScreen()
+
     }
 
 }

@@ -2,18 +2,24 @@ package com.mygdx.values
 
 // The objective of this class is to hold values that will never change
 object Constants {
-    val BASE_GAME_WIDTH = 600
-    val BASE_GAME_HEIGHT = 800
+    const val BASE_GAME_WIDTH = 600
+    const val BASE_GAME_HEIGHT = 800
 
-    // Size of the objects from the game, this should be defined relative to the GAME_WIDTH and GAME_HEIGHT from
-    // GameInfo object so that resize occurs naturally, to do this we can proceed from two basic ways:
-    // 1 ) define directly percentages of the screen occupied
-    // 2 ) define according to BASE_GAME_WIDTH and BASE_GAME_HEIGHT that will be scaled
 
-    // defined as 1
-    val PLAYER_WIDTH : Double = 0.1
-    //defined as 2
-    val PLAYER_HEIGHT : Double = (70.0 / BASE_GAME_HEIGHT)
+    const val BUTTON_WIDTH : Float = 300.0F
+    const val BUTTON_HEIGHT : Float = 100.0F
+    const val BUTTON_Y_MARGIN : Float = 20.0F
+
+    const val QUIT_BUTTON_X : Float = 150.0F
+    const val QUIT_BUTTON_Y : Float = 2 * BUTTON_Y_MARGIN
+
+
+    const val HELP_BUTTON_X : Float = QUIT_BUTTON_X
+    const val HELP_BUTTON_Y : Float = QUIT_BUTTON_Y + BUTTON_HEIGHT + BUTTON_Y_MARGIN
+
+    const val PLAY_BUTTON_X : Float = QUIT_BUTTON_X
+    const val PLAY_BUTTON_Y : Float = HELP_BUTTON_Y + BUTTON_HEIGHT + BUTTON_Y_MARGIN
+
 
 
     // Scenes IDs
@@ -23,10 +29,22 @@ object Constants {
     val PAUSE_ID = 2
     val GAME_OVER_ID = 3
     val WINNER_ID = 4
+    val HELP_ID = 5
 
     // File paths
 
     val TEXTURES = "textures/"
     val BACKGROUND = TEXTURES + "background/"
     val BG_IMG_PATH = BACKGROUND + "background.png"
+
+    val HUD = "hud/"
+    val PLAY_BUT = HUD + "Play.png"
+    val HELP_BUT = HUD + "Help.png"
+    val QUIT_BUT = HUD + "Quit.png"
+
+    val MUSIC = "music/"
+    val MAIN_MENU_MUSIC = MUSIC + "bgm.mp3"
+
+
+
 }

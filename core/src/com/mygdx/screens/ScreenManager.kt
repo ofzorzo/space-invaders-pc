@@ -16,12 +16,11 @@ class ScreenManager {
 
     constructor(game: SpaceInvadersGame){
         this.game = game
-        this.game_running_screen = GameRunning(game, this)
-        this.game_over_screen = GameOver(game, this)
-        this.main_menu_screen = MainMenu(game, this)
-        this.pause_screen = Pause(game, this)
-        this.winner_screen = Winner(game, this)
-
+        this.game_running_screen = GameRunning(game)
+        this.game_over_screen = GameOver(game)
+        this.main_menu_screen = MainMenu(game)
+        this.pause_screen = Pause(game)
+        this.winner_screen = Winner(game)
     }
 
     fun updateScreen(){

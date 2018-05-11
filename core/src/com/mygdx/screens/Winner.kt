@@ -9,7 +9,7 @@ class Winner : SuperScreen {
 
     private var bg: Texture = Texture(Constants.BG_IMG_PATH)
 
-    constructor(game: SpaceInvadersGame, manager : ScreenManager) : super(game, manager)
+    constructor(game: SpaceInvadersGame) : super(game)
 
     override fun render(delta: Float) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

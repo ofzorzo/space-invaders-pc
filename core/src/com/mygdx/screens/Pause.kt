@@ -9,12 +9,11 @@ import com.mygdx.values.GameInfo
 class Pause : SuperScreen {
     private var bg: Texture = Texture(Constants.BG_IMG_PATH)
 
-    constructor(game: SpaceInvadersGame, manager : ScreenManager) : super(game, manager)
+    constructor(game: SpaceInvadersGame) : super(game)
 
     override fun render(delta: Float) {
         println("pause render")
-        GameInfo.CURRENT_STATE = Constants.MAIN_MENU_ID
-        super.manager.updateScreen()
+
     }
 
 }
