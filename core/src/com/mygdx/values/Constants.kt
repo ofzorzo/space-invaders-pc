@@ -20,6 +20,8 @@ object Constants {
     const val PLAY_BUTTON_X : Float = QUIT_BUTTON_X
     const val PLAY_BUTTON_Y : Float = HELP_BUTTON_Y + BUTTON_HEIGHT + BUTTON_Y_MARGIN
 
+    const val BACK_BUTTON_X : Float = 300.0F
+    const val BACK_BUTTON_Y : Float = 100.0F
 
 
     // Scenes IDs
@@ -41,10 +43,27 @@ object Constants {
     val PLAY_BUT = HUD + "Play.png"
     val HELP_BUT = HUD + "Help.png"
     val QUIT_BUT = HUD + "Quit.png"
+    val BACK_BUT = HUD + "Back.png"
 
     val MUSIC = "music/"
     val MAIN_MENU_MUSIC = MUSIC + "bgm.mp3"
+    val HELP_MUSIC = MUSIC + "helpMusic.mp3"
 
+
+    val UI = "ui/"
+    val FONTS = UI + "fonts/"
+    val FNT_FONT = FONTS + "ken_vector.fnt"
+    val PNG_FONT = FONTS + "ken_vector.png"
+
+
+    // Texts
+
+    val HELP_TEXT = "SPACE INVADERS :\n    - Arrows to Move " +
+                                    "\n    - Space to Shoot" +
+                                    "\n    - P to Pause"
+
+    val HELP_TEXT_X = 50.0F
+    val HELP_TEXT_Y = 400.0F
 
 
 }

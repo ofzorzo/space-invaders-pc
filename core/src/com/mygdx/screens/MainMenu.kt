@@ -17,17 +17,15 @@ import com.mygdx.handlers.QuitHandler
 import com.mygdx.values.Constants
 import com.mygdx.values.GameInfo
 
-class MainMenu : SuperScreen{
-    private var bgTexture : Texture
-    private var playButton : ImageButton
-    private var helpButton : ImageButton
-    private var quitButton : ImageButton
-    private var mainMenuStage : Stage
-    private var bgMusic : Music
+class MainMenu(game: SpaceInvadersGame) : SuperScreen(game) {
+    private lateinit var bgTexture : Texture
+    private lateinit var playButton : ImageButton
+    private lateinit var helpButton : ImageButton
+    private lateinit var quitButton : ImageButton
+    private lateinit var mainMenuStage : Stage
+    private lateinit var bgMusic : Music
 
-    //I preferred to not convert to primary constructor because in my opinion this is clearer
-    constructor(game:SpaceInvadersGame) : super(game){
-
+    override fun show() {
         //BACKGROUND IMAGE
         val originalBG = Pixmap(Gdx.files.internal(Constants.BG_IMG_PATH))
         val scaledBG = Pixmap(GameInfo.GAME_WIDTH, GameInfo.GAME_HEIGHT, originalBG.format)
@@ -73,7 +71,7 @@ class MainMenu : SuperScreen{
         this.bgMusic = Gdx.audio.newMusic(Gdx.files.internal(Constants.MAIN_MENU_MUSIC))
         this.bgMusic.play()
         this.bgMusic.isLooping = true
-
+        this.bgMusic.volume = 0.5f
     }
 
     //Called each frame, delta is the time difference to previous call of render
@@ -90,6 +88,21 @@ class MainMenu : SuperScreen{
         this.mainMenuStage.act(Gdx.graphics.deltaTime)
         this.mainMenuStage.draw()
 
+
+    }
+
+    override fun hide() {
+        this.bgMusic.stop()
+        Gdx.input.inputProcessor = null
+
+    }
+
+    override fun resume() {
+        //restart the music
+        this.bgMusic.play()
+        this.bgMusic.isLooping = true
+        //set the proper input handler
+        Gdx.input.inputProcessor = this.mainMenuStage
 
     }
 
