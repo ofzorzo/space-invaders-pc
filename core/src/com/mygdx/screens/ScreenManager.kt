@@ -1,5 +1,7 @@
 package com.mygdx.screens
 
+import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.audio.Music
 import com.mygdx.game.SpaceInvadersGame
 import com.mygdx.values.Constants
 import com.mygdx.values.GameInfo
@@ -13,6 +15,8 @@ class ScreenManager {
     private var pause_screen : Pause
     private var winner_screen : Winner
     private var help_screen : HelpScreen
+    private var mainMenuMusic: Music
+    private var gameMusic: Music
 
 
     constructor(game: SpaceInvadersGame){
@@ -23,6 +27,16 @@ class ScreenManager {
         this.pause_screen = Pause(game)
         this.winner_screen = Winner(game)
         this.help_screen = HelpScreen(game)
+
+        //MENU MUSIC
+        this.mainMenuMusic = Gdx.audio.newMusic(Gdx.files.internal(Constants.MAIN_MENU_MUSIC))
+        this.mainMenuMusic.isLooping = true
+        this.mainMenuMusic.volume = 0.20f
+
+        //GAME MUSIC
+        this.gameMusic = Gdx.audio.newMusic(Gdx.files.internal(Constants.GAME_MUSIC))
+        this.gameMusic.isLooping = true
+        this.gameMusic.volume = 0.10f
     }
 
     fun updateScreen(newScreen : Int){
@@ -38,6 +52,16 @@ class ScreenManager {
                     Constants.HELP_ID -> this.help_screen
                     else -> this.game.screen
                 }
+
+        if(GameInfo.CURRENT_STATE==Constants.MAIN_MENU_ID || GameInfo.CURRENT_STATE==Constants.HELP_ID){
+            this.gameMusic.stop()
+            this.mainMenuMusic.play()
+        }
+        else if(GameInfo.CURRENT_STATE==Constants.GAME_RUNNING_ID) {
+            this.mainMenuMusic.stop()
+            this.gameMusic.play()
+        }
+
     }
 
 

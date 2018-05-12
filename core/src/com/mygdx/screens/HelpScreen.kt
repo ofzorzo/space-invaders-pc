@@ -1,7 +1,6 @@
 package com.mygdx.screens
 
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.audio.Music
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.Texture
@@ -23,8 +22,6 @@ class HelpScreen(game: SpaceInvadersGame) : SuperScreen(game) {
     private lateinit var font : BitmapFont
     private lateinit var backButton : ImageButton
     private lateinit var helpStage : Stage
-    private lateinit var bgMusic : Music
-
 
     override fun show() {
         //BACKGROUND IMAGE
@@ -48,10 +45,6 @@ class HelpScreen(game: SpaceInvadersGame) : SuperScreen(game) {
         this.helpStage.addActor(this.backButton)
         Gdx.input.inputProcessor = this.helpStage
 
-        //MUSIC
-        this.bgMusic = Gdx.audio.newMusic(Gdx.files.internal(Constants.HELP_MUSIC))
-        this.bgMusic.play()
-        this.bgMusic.isLooping = true
     }
 
 
@@ -71,13 +64,11 @@ class HelpScreen(game: SpaceInvadersGame) : SuperScreen(game) {
     }
 
     override fun hide() {
-        this.bgMusic.stop()
         Gdx.input.inputProcessor = null
 
     }
 
     override fun resume() {
-        this.bgMusic.play()
         Gdx.input.inputProcessor = this.helpStage
 
     }

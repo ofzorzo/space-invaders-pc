@@ -1,11 +1,6 @@
 package com.mygdx.game
 
-import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.graphics.Pixmap
-import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.scenes.scene2d.Actor
-import com.badlogic.gdx.scenes.scene2d.InputEvent
-import com.badlogic.gdx.scenes.scene2d.InputListener
 import com.mygdx.handlers.InGameHandler
 import com.mygdx.values.Constants
 
@@ -13,7 +8,6 @@ import com.mygdx.values.Constants
 class PlayerSpaceship : Actor{
 
     private var shots = mutableListOf< Pair<Int, Int> >()
-    //private var userInput: InputListener = InputListener()
     private var moveRight: Boolean = false
     private var moveLeft: Boolean = false
 
