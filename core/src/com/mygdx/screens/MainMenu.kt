@@ -25,6 +25,7 @@ class MainMenu(game: SpaceInvadersGame) : SuperScreen(game) {
     private lateinit var quitButton : ImageButton
     private lateinit var mainMenuStage : Stage
     private lateinit var font : BitmapFont
+    private lateinit var creditsFont : BitmapFont
     override fun show() {
         //BACKGROUND IMAGE
         val originalBG = Pixmap(Gdx.files.internal(Constants.BG_IMG_PATH))
@@ -37,6 +38,10 @@ class MainMenu(game: SpaceInvadersGame) : SuperScreen(game) {
         this.font = BitmapFont(Gdx.files.internal(Constants.FNT_FONT))
         this.font.data.scaleX = Constants.MAIN_MENU_X_SCALE
         this.font.data.scaleY = Constants.MAIN_MENU_Y_SCALE
+        this.creditsFont = BitmapFont(Gdx.files.internal(Constants.FNT_FONT))
+        this.creditsFont.data.scaleX = 0.5f
+        this.creditsFont.data.scaleY = 0.5f
+
 
         //PLAY BUTTON
         val playTexture = Texture(Constants.PLAY_BUT)
@@ -86,6 +91,8 @@ class MainMenu(game: SpaceInvadersGame) : SuperScreen(game) {
         game.getSpriteBatch().draw(bgTexture, 0.0F, 0.0F)
         this.font.draw(game.getSpriteBatch(), Constants.MAIN_MENU_TEXT_1, Constants.MAIN_MENU_TEXT_1_X, Constants.MAIN_MENU_TEXT_1_Y)
         this.font.draw(game.getSpriteBatch(), Constants.MAIN_MENU_TEXT_2, Constants.MAIN_MENU_TEXT_2_X, Constants.MAIN_MENU_TEXT_2_Y)
+
+        this.creditsFont.draw(game.getSpriteBatch(), Constants.CREDITS, 25.0f,15.0f)
         game.getSpriteBatch().end() // needs to be called after drawing
         this.mainMenuStage.act(Gdx.graphics.deltaTime)
         this.mainMenuStage.draw()

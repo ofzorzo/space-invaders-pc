@@ -108,6 +108,7 @@ object Constants {
     const val PAUSE_KEY = 44
     const val ESC_KEY = 131
 
+    val CREDITS = "Por Felipe Zorzo Pereira e William Wilbert Vargas - 2018"
 
 
 
