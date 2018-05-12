@@ -3,15 +3,20 @@ package com.mygdx.handlers
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.InputListener
 import com.mygdx.game.PlayerSpaceship
+import com.mygdx.game.SpaceInvadersGame
+import com.mygdx.values.Constants
+import com.mygdx.values.GameInfo
 
-class InGameHandler(val spaceShip: PlayerSpaceship) : InputListener() {
+class InGameHandler(val spaceShip: PlayerSpaceship, val game: SpaceInvadersGame) : InputListener() {
 
     override fun keyDown(event: InputEvent?, keycode: Int): Boolean {
-        if (keycode==22)
-            this.spaceShip.setMoveRight(true)
-        if (keycode==21)
-            this.spaceShip.setMoveLeft(true)
-
+        when (keycode) {
+            Constants.RIGHT_ARROW -> this.spaceShip.setMoveRight(true)
+            Constants.LEFT_ARROW -> this.spaceShip.setMoveLeft(true)
+            Constants.PAUSE_KEY, Constants.ESC_KEY ->
+                this.game.getScreenManager().updateScreen(Constants.PAUSE_ID)
+            else -> println("Pressed $keycode") // This is equal to "Pressed " + keycode
+        }
         return super.keyDown(event, keycode)
     }
 

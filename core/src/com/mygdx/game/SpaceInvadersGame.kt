@@ -14,8 +14,7 @@ class SpaceInvadersGame : Game() {
     override fun create() {
         batch = SpriteBatch()
         this.screens = ScreenManager(this)
-        GameInfo.CURRENT_STATE = Constants.MAIN_MENU_ID
-        this.screens.updateScreen()
+        this.screens.updateScreen(Constants.MAIN_MENU_ID)
 
     }
 

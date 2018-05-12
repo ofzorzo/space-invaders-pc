@@ -25,9 +25,11 @@ class ScreenManager {
         this.help_screen = HelpScreen(game)
     }
 
-    fun updateScreen(){
+    fun updateScreen(newScreen : Int){
+        GameInfo.PREVIOUS_STATE = GameInfo.CURRENT_STATE
+        GameInfo.CURRENT_STATE = newScreen
         this.game.screen =
-                when(GameInfo.CURRENT_STATE){
+                when(newScreen){
                     Constants.GAME_OVER_ID -> this.game_over_screen
                     Constants.GAME_RUNNING_ID -> this.game_running_screen
                     Constants.PAUSE_ID -> this.pause_screen

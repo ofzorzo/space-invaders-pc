@@ -2,6 +2,7 @@ package com.mygdx.screens
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Screen
+import com.badlogic.gdx.audio.Music
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.Texture
@@ -21,14 +22,31 @@ class GameRunning : SuperScreen {
     private lateinit var spaceShipTexture : Texture
     private lateinit var font : BitmapFont
     private lateinit var playStage : Stage
+    private lateinit var bgMusic : Music
+    private lateinit var spaceShip: PlayerSpaceship
+
     private var currentScore: Int
-    private var spaceShip: PlayerSpaceship = PlayerSpaceship()
+    private var initialized : Boolean = false
+
 
     constructor(game: SpaceInvadersGame) : super(game){
         this.currentScore = 0
     }
 
     override fun show(){
+
+        println("running show()")
+        if (!this.initialized)
+            this.init()
+        else
+            this.resume()
+
+    }
+
+    //Executes only once, this cannot be done in the constructor because it may run only to show the screen
+    //Separated from show method, because it may not be called when the user continue from pause
+    fun init (){
+        println("running init")
         val originalBG = Pixmap(Gdx.files.internal(Constants.BG_IMG_PATH))
         val scaledBG = Pixmap(GameInfo.GAME_WIDTH, GameInfo.GAME_HEIGHT, originalBG.format)
         scaledBG.drawPixmap(originalBG,
@@ -40,10 +58,20 @@ class GameRunning : SuperScreen {
 
         this.spaceShipTexture = Texture(Pixmap(Gdx.files.internal(Constants.PLAYER_SPACESHIP)))
 
+        //Initialized here to pass game, this is needed to change screens in game
+        this.spaceShip = PlayerSpaceship(this.game)
+
         this.playStage = Stage(ScreenViewport())
         this.playStage.addActor(this.spaceShip)
         this.playStage.setKeyboardFocus(this.spaceShip)
         Gdx.input.inputProcessor = this.playStage
+
+
+        //MUSIC
+        this.bgMusic = Gdx.audio.newMusic(Gdx.files.internal(Constants.RUNNING_MUSIC))
+        this.bgMusic.play()
+        this.bgMusic.isLooping = true
+        this.initialized = true
     }
 
     override fun render(delta: Float) {
@@ -71,4 +99,19 @@ class GameRunning : SuperScreen {
         return this.currentScore
     }
 
+    override fun hide() {
+        println("running hide()")
+        this.bgMusic.stop()
+        Gdx.input.inputProcessor = null
+    }
+
+    override fun resume() {
+
+        println("running resume()")
+        //restart the music
+        this.bgMusic.play()
+        this.bgMusic.isLooping = true
+        //set the proper input handler
+        Gdx.input.inputProcessor = this.playStage
+    }
 }

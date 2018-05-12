@@ -17,10 +17,10 @@ class PlayerSpaceship : Actor{
     private var moveRight: Boolean = false
     private var moveLeft: Boolean = false
 
-    constructor() : super(){
+    constructor(game: SpaceInvadersGame) : super(){
         this.setPosition(Constants.SPACESHIP_INITIAL_X_POS, Constants.SPACESHIP_INITIAL_Y_POS)
         this.setSize(Constants.SPACESHIP_WIDTH, Constants.SPACESHIP_HEIGHT)
-        this.addListener(InGameHandler(this))
+        this.addListener(InGameHandler(this, game))
     }
 
     fun move(){

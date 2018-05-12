@@ -5,6 +5,7 @@ import com.badlogic.gdx.audio.Music
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton
@@ -24,7 +25,7 @@ class MainMenu(game: SpaceInvadersGame) : SuperScreen(game) {
     private lateinit var quitButton : ImageButton
     private lateinit var mainMenuStage : Stage
     private lateinit var bgMusic : Music
-
+    private lateinit var font : BitmapFont
     override fun show() {
         //BACKGROUND IMAGE
         val originalBG = Pixmap(Gdx.files.internal(Constants.BG_IMG_PATH))
@@ -33,6 +34,10 @@ class MainMenu(game: SpaceInvadersGame) : SuperScreen(game) {
                 0, 0, originalBG.width, originalBG.height,
                 0, 0, scaledBG.width, scaledBG.height)
         this.bgTexture = Texture(scaledBG)
+        //FONT
+        this.font = BitmapFont(Gdx.files.internal(Constants.FNT_FONT))
+        this.font.data.scaleX = Constants.MAIN_MENU_X_SCALE
+        this.font.data.scaleY = Constants.MAIN_MENU_Y_SCALE
 
         //PLAY BUTTON
         val playTexture = Texture(Constants.PLAY_BUT)
@@ -54,7 +59,7 @@ class MainMenu(game: SpaceInvadersGame) : SuperScreen(game) {
         val quitTexture = Texture(Constants.QUIT_BUT)
         val quitTextureRegDrawable = TextureRegionDrawable(TextureRegion(quitTexture))
         this.quitButton = ImageButton(quitTextureRegDrawable)
-        this.quitButton.addListener(QuitHandler())
+        this.quitButton.addListener(QuitHandler(this.game))
         this.quitButton.setPosition(Constants.QUIT_BUTTON_X, Constants.QUIT_BUTTON_Y)
         this.quitButton.setSize(Constants.BUTTON_WIDTH, Constants.BUTTON_HEIGHT)
 
@@ -84,6 +89,8 @@ class MainMenu(game: SpaceInvadersGame) : SuperScreen(game) {
 
         game.getSpriteBatch().begin() // needs to be called before draw
         game.getSpriteBatch().draw(bgTexture, 0.0F, 0.0F)
+        this.font.draw(game.getSpriteBatch(), Constants.MAIN_MENU_TEXT_1, Constants.MAIN_MENU_TEXT_1_X, Constants.MAIN_MENU_TEXT_1_Y)
+        this.font.draw(game.getSpriteBatch(), Constants.MAIN_MENU_TEXT_2, Constants.MAIN_MENU_TEXT_2_X, Constants.MAIN_MENU_TEXT_2_Y)
         game.getSpriteBatch().end() // needs to be called after drawing
         this.mainMenuStage.act(Gdx.graphics.deltaTime)
         this.mainMenuStage.draw()

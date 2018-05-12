@@ -11,8 +11,7 @@ class HelpHandler(val game: SpaceInvadersGame) : InputListener() {
 
     override fun touchDown(event: InputEvent?, x: Float, y: Float, pointer: Int, button: Int): Boolean {
         println("Pressed Help Button")
-        GameInfo.CURRENT_STATE = Constants.HELP_ID
-        this.game.getScreenManager().updateScreen()
+        this.game.getScreenManager().updateScreen(Constants.HELP_ID)
 
         return true
     }

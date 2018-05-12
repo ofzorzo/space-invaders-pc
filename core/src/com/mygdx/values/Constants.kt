@@ -15,7 +15,7 @@ object Constants {
 
     const val BUTTON_WIDTH : Float = 300.0F
     const val BUTTON_HEIGHT : Float = 100.0F
-    const val BUTTON_Y_MARGIN : Float = 20.0F
+    private const val BUTTON_Y_MARGIN : Float = 20.0F
 
     const val QUIT_BUTTON_X : Float = 150.0F
     const val QUIT_BUTTON_Y : Float = 2 * BUTTON_Y_MARGIN
@@ -30,55 +30,85 @@ object Constants {
     const val BACK_BUTTON_X : Float = 300.0F
     const val BACK_BUTTON_Y : Float = 100.0F
 
+    const val CONTINUE_BUTTON_X: Float = PLAY_BUTTON_X
+    const val CONTINUE_BUTTON_Y: Float = PLAY_BUTTON_Y
+
 
     // Scenes IDs
 
-    val MAIN_MENU_ID = 0
-    val GAME_RUNNING_ID = 1
-    val PAUSE_ID = 2
-    val GAME_OVER_ID = 3
-    val WINNER_ID = 4
-    val HELP_ID = 5
+    const val MAIN_MENU_ID = 0
+    const val GAME_RUNNING_ID = 1
+    const val PAUSE_ID = 2
+    const val GAME_OVER_ID = 3
+    const val WINNER_ID = 4
+    const val HELP_ID = 5
 
     // File paths
 
-    val TEXTURES = "textures/"
-    val BACKGROUND = TEXTURES + "background/"
-    val BG_IMG_PATH = BACKGROUND + "background.png"
-    val PLAYER_SPACESHIP = TEXTURES + "player2.png"
+    private const val TEXTURES = "textures/"
+    private const val BACKGROUND = TEXTURES + "background/"
+    const val BG_IMG_PATH = BACKGROUND + "background.png"
+    const val PLAYER_SPACESHIP = TEXTURES + "player2.png"
 
-    val HUD = "hud/"
-    val PLAY_BUT = HUD + "Play.png"
-    val HELP_BUT = HUD + "Help.png"
-    val QUIT_BUT = HUD + "Quit.png"
-    val BACK_BUT = HUD + "Back.png"
+    private const val HUD = "hud/"
+    const val PLAY_BUT = HUD + "Play.png"
+    const val HELP_BUT = HUD + "Help.png"
+    const val QUIT_BUT = HUD + "Quit.png"
+    const val BACK_BUT = HUD + "Back.png"
+    const val CONTINUE_BUT = HUD + "Continue.png"
 
-    val MUSIC = "music/"
-    val MAIN_MENU_MUSIC = MUSIC + "bgm.mp3"
-    val HELP_MUSIC = MUSIC + "helpMusic.mp3"
+    private const val MUSIC = "music/"
+    const val MAIN_MENU_MUSIC = MUSIC + "bgm.mp3"
+    const val HELP_MUSIC = MUSIC + "helpMusic.mp3"
+    const val RUNNING_MUSIC = MUSIC + "marcha_imperial.mp3"
+    const val PAUSE_MUSIC = MUSIC + "pauseMusic.mp3"
 
-
-    val UI = "ui/"
-    val FONTS = UI + "fonts/"
-    val FNT_FONT = FONTS + "ken_vector.fnt"
+    private const val UI = "ui/"
+    private const val FONTS = UI + "fonts/"
+    const val FNT_FONT = FONTS + "ken_vector.fnt"
     val PNG_FONT = FONTS + "ken_vector.png"
 
 
     // Texts
 
-    val HELP_TEXT = "SPACE INVADERS :\n    - Arrows to Move " +
+    const val HELP_TEXT = "SPACE INVADERS :\n    - Arrows to Move " +
                                     "\n    - Space to Shoot" +
-                                    "\n    - P to Pause"
+                                    "\n    - P or ESC to Pause"
 
-    val HELP_TEXT_X = 50.0F
-    val HELP_TEXT_Y = 400.0F
+    const val HELP_TEXT_X = 50.0F
+    const val HELP_TEXT_Y = 400.0F
 
-    val SCORE_TEXT = "SCORE: "
-    val SCORE_TEXT_X = 15.0F
-    val SCORE_TEXT_Y = 785.0f
+    const val SCORE_TEXT = "SCORE: "
+    const val SCORE_TEXT_X = 15.0F
+    const val SCORE_TEXT_Y = 720.0f
 
-    val CURRENT_SCORE_X = 143.0f
-    val CURRENT_SCORE_Y = 785.0f
+    const val CURRENT_SCORE_X = 143.0f
+    const val CURRENT_SCORE_Y = 720.0f
+
+    const val PAUSE_TEXT = "PAUSE"
+    const val PAUSE_TEXT_X = 200.0F
+    const val PAUSE_TEXT_Y = 500.0F
+    const val PAUSE_X_SCALE = 2.0F
+    const val PAUSE_Y_SCALE = 2.0F
+
+    const val MAIN_MENU_TEXT_1 = "SPACE"
+    const val MAIN_MENU_TEXT_2 = "INVADERS"
+    const val MAIN_MENU_TEXT_1_X = 150.0F
+    const val MAIN_MENU_TEXT_1_Y = 650.0F
+    const val MAIN_MENU_TEXT_2_X = 50.0F
+    const val MAIN_MENU_TEXT_2_Y = MAIN_MENU_TEXT_1_Y - 100.0F
+
+    const val MAIN_MENU_X_SCALE = 3.0F
+    const val MAIN_MENU_Y_SCALE = 3.0F
+
+    // Char values
+
+    const val RIGHT_ARROW = 22
+    const val LEFT_ARROW = 21
+    const val PAUSE_KEY = 44
+    const val ESC_KEY = 131
+
+
 
 
 }

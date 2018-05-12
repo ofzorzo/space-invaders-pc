@@ -16,6 +16,6 @@ object GameInfo {
     var HEIGHT_SCALE = 1.0
 
     var CURRENT_STATE = Constants.MAIN_MENU_ID
-
+    var PREVIOUS_STATE = Constants.MAIN_MENU_ID
 
 }
