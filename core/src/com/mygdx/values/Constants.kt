@@ -5,6 +5,13 @@ object Constants {
     const val BASE_GAME_WIDTH = 600
     const val BASE_GAME_HEIGHT = 800
 
+    const val SPACESHIP_WIDTH = 98.0f
+    const val SPACESHIP_HEIGHT = 75.0f
+
+    const val SPACESHIP_INITIAL_X_POS = (BASE_GAME_WIDTH/2)-(SPACESHIP_WIDTH/2)
+    const val SPACESHIP_INITIAL_Y_POS = 10.0f
+
+    const val MOVEMENT_SPEED = 5.0f // número de pixels com que um objeto é movido a cada novo frame
 
     const val BUTTON_WIDTH : Float = 300.0F
     const val BUTTON_HEIGHT : Float = 100.0F
@@ -38,6 +45,7 @@ object Constants {
     val TEXTURES = "textures/"
     val BACKGROUND = TEXTURES + "background/"
     val BG_IMG_PATH = BACKGROUND + "background.png"
+    val PLAYER_SPACESHIP = TEXTURES + "player2.png"
 
     val HUD = "hud/"
     val PLAY_BUT = HUD + "Play.png"
@@ -64,6 +72,13 @@ object Constants {
 
     val HELP_TEXT_X = 50.0F
     val HELP_TEXT_Y = 400.0F
+
+    val SCORE_TEXT = "SCORE: "
+    val SCORE_TEXT_X = 15.0F
+    val SCORE_TEXT_Y = 785.0f
+
+    val CURRENT_SCORE_X = 143.0f
+    val CURRENT_SCORE_Y = 785.0f
 
 
 }
