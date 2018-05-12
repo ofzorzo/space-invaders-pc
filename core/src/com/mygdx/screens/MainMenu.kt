@@ -1,10 +1,10 @@
 package com.mygdx.screens
 
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.audio.Music
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton
@@ -23,7 +23,7 @@ class MainMenu(game: SpaceInvadersGame) : SuperScreen(game) {
     private lateinit var helpButton : ImageButton
     private lateinit var quitButton : ImageButton
     private lateinit var mainMenuStage : Stage
-    private lateinit var bgMusic : Music
+    private lateinit var font : BitmapFont
 
     override fun show() {
         //BACKGROUND IMAGE
@@ -58,6 +58,11 @@ class MainMenu(game: SpaceInvadersGame) : SuperScreen(game) {
         this.quitButton.setPosition(Constants.QUIT_BUTTON_X, Constants.QUIT_BUTTON_Y)
         this.quitButton.setSize(Constants.BUTTON_WIDTH, Constants.BUTTON_HEIGHT)
 
+        //FONT
+        this.font = BitmapFont(Gdx.files.internal(Constants.FNT_FONT))
+        this.font.getData().setScale(0.5f)
+
+
         //STAGE
 
         this.mainMenuStage = Stage(ScreenViewport())
@@ -67,11 +72,6 @@ class MainMenu(game: SpaceInvadersGame) : SuperScreen(game) {
         this.mainMenuStage.addActor(this.quitButton)
         Gdx.input.inputProcessor = this.mainMenuStage
 
-        // BACKGROUND MUSIC
-        this.bgMusic = Gdx.audio.newMusic(Gdx.files.internal(Constants.MAIN_MENU_MUSIC))
-        this.bgMusic.play()
-        this.bgMusic.isLooping = true
-        this.bgMusic.volume = 0.5f
     }
 
     //Called each frame, delta is the time difference to previous call of render
@@ -84,6 +84,7 @@ class MainMenu(game: SpaceInvadersGame) : SuperScreen(game) {
 
         game.getSpriteBatch().begin() // needs to be called before draw
         game.getSpriteBatch().draw(bgTexture, 0.0F, 0.0F)
+        this.font.draw(game.getSpriteBatch(), Constants.CREDITS, 25.0f,15.0f)
         game.getSpriteBatch().end() // needs to be called after drawing
         this.mainMenuStage.act(Gdx.graphics.deltaTime)
         this.mainMenuStage.draw()
@@ -92,15 +93,12 @@ class MainMenu(game: SpaceInvadersGame) : SuperScreen(game) {
     }
 
     override fun hide() {
-        this.bgMusic.stop()
-        Gdx.input.inputProcessor = null
 
+        Gdx.input.inputProcessor = null
     }
 
     override fun resume() {
-        //restart the music
-        this.bgMusic.play()
-        this.bgMusic.isLooping = true
+
         //set the proper input handler
         Gdx.input.inputProcessor = this.mainMenuStage
 
@@ -109,7 +107,6 @@ class MainMenu(game: SpaceInvadersGame) : SuperScreen(game) {
     //Free used memory space when this screen is destroyesd
     override fun dispose() {
 
-        this.bgMusic.dispose()
         this.mainMenuStage.dispose()
         this.bgTexture.dispose()
     }

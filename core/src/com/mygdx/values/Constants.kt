@@ -54,8 +54,9 @@ object Constants {
     val BACK_BUT = HUD + "Back.png"
 
     val MUSIC = "music/"
-    val MAIN_MENU_MUSIC = MUSIC + "bgm.mp3"
-    val HELP_MUSIC = MUSIC + "helpMusic.mp3"
+    val MAIN_MENU_MUSIC = MUSIC + "imperialMarch.mp3"
+    val HELP_MUSIC = MUSIC + "imperialMarch.mp3"
+    val GAME_MUSIC = MUSIC + "starWarsMainTheme.mp3"
 
 
     val UI = "ui/"
@@ -69,6 +70,8 @@ object Constants {
     val HELP_TEXT = "SPACE INVADERS :\n    - Arrows to Move " +
                                     "\n    - Space to Shoot" +
                                     "\n    - P to Pause"
+
+    val CREDITS = "Por Felipe Zorzo Pereira e William Wilbert Vargas - 2018"
 
     val HELP_TEXT_X = 50.0F
     val HELP_TEXT_Y = 400.0F

@@ -1,7 +1,6 @@
 package com.mygdx.screens
 
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.Texture
@@ -9,12 +8,9 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.mygdx.game.SpaceInvadersGame
 import com.mygdx.values.Constants
 import com.mygdx.values.GameInfo
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import com.mygdx.game.PlayerSpaceship
-import com.mygdx.handlers.InGameHandler
-import com.mygdx.handlers.PlayHandler
 
 class GameRunning : SuperScreen {
     private lateinit var bgTexture : Texture
@@ -29,6 +25,7 @@ class GameRunning : SuperScreen {
     }
 
     override fun show(){
+        //BACKGROUND
         val originalBG = Pixmap(Gdx.files.internal(Constants.BG_IMG_PATH))
         val scaledBG = Pixmap(GameInfo.GAME_WIDTH, GameInfo.GAME_HEIGHT, originalBG.format)
         scaledBG.drawPixmap(originalBG,
@@ -36,10 +33,13 @@ class GameRunning : SuperScreen {
                 0, 0, scaledBG.width, scaledBG.height)
         this.bgTexture = Texture(scaledBG)
 
+        //FONT
         this.font = BitmapFont(Gdx.files.internal(Constants.FNT_FONT))
 
+        //SPACESHIP
         this.spaceShipTexture = Texture(Pixmap(Gdx.files.internal(Constants.PLAYER_SPACESHIP)))
 
+        //STAGE
         this.playStage = Stage(ScreenViewport())
         this.playStage.addActor(this.spaceShip)
         this.playStage.setKeyboardFocus(this.spaceShip)
