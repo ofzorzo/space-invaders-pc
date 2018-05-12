@@ -24,7 +24,6 @@ class MainMenu(game: SpaceInvadersGame) : SuperScreen(game) {
     private lateinit var helpButton : ImageButton
     private lateinit var quitButton : ImageButton
     private lateinit var mainMenuStage : Stage
-    private lateinit var bgMusic : Music
     private lateinit var font : BitmapFont
     override fun show() {
         //BACKGROUND IMAGE
@@ -72,11 +71,7 @@ class MainMenu(game: SpaceInvadersGame) : SuperScreen(game) {
         this.mainMenuStage.addActor(this.quitButton)
         Gdx.input.inputProcessor = this.mainMenuStage
 
-        // BACKGROUND MUSIC
-        this.bgMusic = Gdx.audio.newMusic(Gdx.files.internal(Constants.MAIN_MENU_MUSIC))
-        this.bgMusic.play()
-        this.bgMusic.isLooping = true
-        this.bgMusic.volume = 0.5f
+
     }
 
     //Called each frame, delta is the time difference to previous call of render
@@ -99,15 +94,11 @@ class MainMenu(game: SpaceInvadersGame) : SuperScreen(game) {
     }
 
     override fun hide() {
-        this.bgMusic.stop()
         Gdx.input.inputProcessor = null
 
     }
 
     override fun resume() {
-        //restart the music
-        this.bgMusic.play()
-        this.bgMusic.isLooping = true
         //set the proper input handler
         Gdx.input.inputProcessor = this.mainMenuStage
 
@@ -116,7 +107,6 @@ class MainMenu(game: SpaceInvadersGame) : SuperScreen(game) {
     //Free used memory space when this screen is destroyesd
     override fun dispose() {
 
-        this.bgMusic.dispose()
         this.mainMenuStage.dispose()
         this.bgTexture.dispose()
     }

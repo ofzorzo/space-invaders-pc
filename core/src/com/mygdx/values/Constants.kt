@@ -58,10 +58,10 @@ object Constants {
     const val CONTINUE_BUT = HUD + "Continue.png"
 
     private const val MUSIC = "music/"
-    const val MAIN_MENU_MUSIC = MUSIC + "bgm.mp3"
-    const val HELP_MUSIC = MUSIC + "helpMusic.mp3"
-    const val RUNNING_MUSIC = MUSIC + "marcha_imperial.mp3"
-    const val PAUSE_MUSIC = MUSIC + "pauseMusic.mp3"
+    const val MAIN_MENU_MUSIC = MUSIC + "imperialMarch.mp3"
+    const val HELP_MUSIC = MUSIC + "imperialMarch.mp3"
+    const val GAME_MUSIC = MUSIC + "starWarsMainTheme.mp3"
+    const val PAUSE_MUSIC = MUSIC + "starWarsMainTheme.mp3"
 
     private const val UI = "ui/"
     private const val FONTS = UI + "fonts/"

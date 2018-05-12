@@ -28,7 +28,7 @@ class Pause(game: SpaceInvadersGame) : SuperScreen(game) {
     private lateinit var quitButton : ImageButton
 
     private lateinit var pauseStage : Stage
-    private lateinit var bgMusic : Music
+   // private lateinit var bgMusic : Music
 
 
     override fun show() {
@@ -75,9 +75,9 @@ class Pause(game: SpaceInvadersGame) : SuperScreen(game) {
         Gdx.input.inputProcessor = this.pauseStage
 
         //MUSIC
-        this.bgMusic = Gdx.audio.newMusic(Gdx.files.internal(Constants.PAUSE_MUSIC))
-        this.bgMusic.play()
-        this.bgMusic.isLooping = true
+        //this.bgMusic = Gdx.audio.newMusic(Gdx.files.internal(Constants.PAUSE_MUSIC))
+        //this.bgMusic.play()
+        //this.bgMusic.isLooping = true
     }
 
 
@@ -97,13 +97,11 @@ class Pause(game: SpaceInvadersGame) : SuperScreen(game) {
     }
 
     override fun hide() {
-        this.bgMusic.stop()
         Gdx.input.inputProcessor = null
 
     }
 
     override fun resume() {
-        this.bgMusic.play()
         Gdx.input.inputProcessor = this.pauseStage
 
     }

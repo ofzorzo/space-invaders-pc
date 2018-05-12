@@ -22,7 +22,6 @@ class GameRunning : SuperScreen {
     private lateinit var spaceShipTexture : Texture
     private lateinit var font : BitmapFont
     private lateinit var playStage : Stage
-    private lateinit var bgMusic : Music
     private lateinit var spaceShip: PlayerSpaceship
 
     private var currentScore: Int
@@ -68,9 +67,6 @@ class GameRunning : SuperScreen {
 
 
         //MUSIC
-        this.bgMusic = Gdx.audio.newMusic(Gdx.files.internal(Constants.RUNNING_MUSIC))
-        this.bgMusic.play()
-        this.bgMusic.isLooping = true
         this.initialized = true
     }
 
@@ -101,17 +97,12 @@ class GameRunning : SuperScreen {
 
     override fun hide() {
         println("running hide()")
-        this.bgMusic.stop()
         Gdx.input.inputProcessor = null
     }
 
     override fun resume() {
 
         println("running resume()")
-        //restart the music
-        this.bgMusic.play()
-        this.bgMusic.isLooping = true
-        //set the proper input handler
         Gdx.input.inputProcessor = this.playStage
     }
 }
