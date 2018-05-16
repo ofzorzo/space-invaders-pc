@@ -1,6 +1,7 @@
 package com.mygdx.screens
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.audio.Music
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.Texture
@@ -11,23 +12,20 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import com.mygdx.game.SpaceInvadersGame
-import com.mygdx.handlers.AgainHandler
 import com.mygdx.handlers.HelpHandler
+import com.mygdx.handlers.PlayHandler
 import com.mygdx.handlers.QuitHandler
 import com.mygdx.values.Constants
 import com.mygdx.values.GameInfo
 
-class GameOver(game: SpaceInvadersGame) : SuperScreen(game) {
-
+class MainMenu(game: SpaceInvadersGame) : SuperScreen(game) {
     private lateinit var bgTexture : Texture
-    private lateinit var againButton : ImageButton
+    private lateinit var playButton : ImageButton
+    private lateinit var helpButton : ImageButton
     private lateinit var quitButton : ImageButton
-    private lateinit var gameOverStage : Stage
+    private lateinit var mainMenuStage : Stage
     private lateinit var font : BitmapFont
     private lateinit var creditsFont : BitmapFont
-    private lateinit var scoreFont : BitmapFont
-
-
     override fun show() {
         //BACKGROUND IMAGE
         val originalBG = Pixmap(Gdx.files.internal(Constants.BG_IMG_PATH))
@@ -38,38 +36,45 @@ class GameOver(game: SpaceInvadersGame) : SuperScreen(game) {
         this.bgTexture = Texture(scaledBG)
         //FONT
         this.font = BitmapFont(Gdx.files.internal(Constants.FNT_FONT))
-        this.font.data.scaleX = Constants.GAME_OVER_X_SCALE
-        this.font.data.scaleY = Constants.GAME_OVER_Y_SCALE
+        this.font.data.scaleX = Constants.MAIN_MENU_X_SCALE
+        this.font.data.scaleY = Constants.MAIN_MENU_Y_SCALE
         this.creditsFont = BitmapFont(Gdx.files.internal(Constants.FNT_FONT))
         this.creditsFont.data.scaleX = 0.5f
         this.creditsFont.data.scaleY = 0.5f
-        this.scoreFont = BitmapFont(Gdx.files.internal(Constants.FNT_FONT))
-        this.creditsFont.data.scaleX = Constants.GO_SCORE_X_SCALE
-        this.creditsFont.data.scaleY = Constants.GO_SCORE_Y_SCALE
 
-        //AGAIN BUTTON
-        val againTexture = Texture(Constants.AGAIN_BUT)
-        val againTextureRegDrawable = TextureRegionDrawable(TextureRegion(againTexture))
-        this.againButton = ImageButton(againTextureRegDrawable)
-        this.againButton.addListener(AgainHandler(this.game))
-        this.againButton.setPosition(Constants.AGAIN_BUTTON_X, Constants.AGAIN_BUTTON_Y)
-        this.againButton.setSize(Constants.BUTTON_WIDTH, Constants.BUTTON_HEIGHT)
+
+        //PLAY BUTTON
+        val playTexture = Texture(Constants.PLAY_BUT)
+        val playTextureRegDrawable = TextureRegionDrawable(TextureRegion(playTexture))
+        this.playButton = ImageButton(playTextureRegDrawable)
+        this.playButton.addListener(PlayHandler(this.game))
+        this.playButton.setPosition(Constants.PLAY_BUTTON_X, Constants.PLAY_BUTTON_Y)
+        this.playButton.setSize(Constants.BUTTON_WIDTH, Constants.BUTTON_HEIGHT)
+
+        //HELP BUTTON
+        val helpTexture = Texture(Constants.HELP_BUT)
+        val helpTextureRegDrawable = TextureRegionDrawable(TextureRegion(helpTexture))
+        this.helpButton = ImageButton(helpTextureRegDrawable)
+        this.helpButton.addListener(HelpHandler(this.game))
+        this.helpButton.setPosition(Constants.HELP_BUTTON_X, Constants.HELP_BUTTON_Y)
+        this.helpButton.setSize(Constants.BUTTON_WIDTH, Constants.BUTTON_HEIGHT)
 
         //QUIT BUTTON
         val quitTexture = Texture(Constants.QUIT_BUT)
         val quitTextureRegDrawable = TextureRegionDrawable(TextureRegion(quitTexture))
         this.quitButton = ImageButton(quitTextureRegDrawable)
         this.quitButton.addListener(QuitHandler(this.game))
-        this.quitButton.setPosition(Constants.GO_QUIT_BUTTON_X, Constants.GO_QUIT_BUTTON_Y)
+        this.quitButton.setPosition(Constants.QUIT_BUTTON_X, Constants.QUIT_BUTTON_Y)
         this.quitButton.setSize(Constants.BUTTON_WIDTH, Constants.BUTTON_HEIGHT)
 
         //STAGE
 
-        this.gameOverStage = Stage(ScreenViewport())
+        this.mainMenuStage = Stage(ScreenViewport())
         // Express that the buttons will act on this screen's stage
-        this.gameOverStage.addActor(this.againButton)
-        this.gameOverStage.addActor(this.quitButton)
-        Gdx.input.inputProcessor = this.gameOverStage
+        this.mainMenuStage.addActor(this.playButton)
+        this.mainMenuStage.addActor(this.helpButton)
+        this.mainMenuStage.addActor(this.quitButton)
+        Gdx.input.inputProcessor = this.mainMenuStage
 
 
     }
@@ -84,15 +89,13 @@ class GameOver(game: SpaceInvadersGame) : SuperScreen(game) {
 
         game.getSpriteBatch().begin() // needs to be called before draw
         game.getSpriteBatch().draw(bgTexture, 0.0F, 0.0F)
-        this.font.draw(game.getSpriteBatch(), Constants.GAME_OVER_TEXT_1, Constants.GAME_OVER_TEXT_1_X, Constants.GAME_OVER_TEXT_1_Y)
-        this.font.draw(game.getSpriteBatch(), Constants.GAME_OVER_TEXT_2, Constants.GAME_OVER_TEXT_2_X, Constants.GAME_OVER_TEXT_2_Y)
-        this.scoreFont.draw(game.getSpriteBatch(), Constants.SCORE_TEXT, Constants.GO_SCORE_TEXT_X, Constants.GO_SCORE_TEXT_Y)
-        this.scoreFont.draw(game.getSpriteBatch(), GameInfo.CURRENT_SCORE.toString(), Constants.GO_CURRENT_SCORE_X, Constants.GO_CURRENT_SCORE_Y)
+        this.font.draw(game.getSpriteBatch(), Constants.MAIN_MENU_TEXT_1, Constants.MAIN_MENU_TEXT_1_X, Constants.MAIN_MENU_TEXT_1_Y)
+        this.font.draw(game.getSpriteBatch(), Constants.MAIN_MENU_TEXT_2, Constants.MAIN_MENU_TEXT_2_X, Constants.MAIN_MENU_TEXT_2_Y)
 
         this.creditsFont.draw(game.getSpriteBatch(), Constants.CREDITS, 25.0f,15.0f)
         game.getSpriteBatch().end() // needs to be called after drawing
-        this.gameOverStage.act(Gdx.graphics.deltaTime)
-        this.gameOverStage.draw()
+        this.mainMenuStage.act(Gdx.graphics.deltaTime)
+        this.mainMenuStage.draw()
 
 
     }
@@ -104,15 +107,16 @@ class GameOver(game: SpaceInvadersGame) : SuperScreen(game) {
 
     override fun resume() {
         //set the proper input handler
-        Gdx.input.inputProcessor = this.gameOverStage
+        Gdx.input.inputProcessor = this.mainMenuStage
 
     }
 
     //Free used memory space when this screen is destroyesd
     override fun dispose() {
 
-        this.gameOverStage.dispose()
+        this.mainMenuStage.dispose()
         this.bgTexture.dispose()
     }
-
 }
+
+
