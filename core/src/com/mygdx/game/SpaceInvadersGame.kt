@@ -2,6 +2,7 @@ package com.mygdx.game
 
 import com.badlogic.gdx.Game
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.mygdx.handlers.HighScoreHandler
 import com.mygdx.screens.ScreenManager
 import com.mygdx.values.Constants
 import com.mygdx.values.GameInfo
@@ -15,6 +16,7 @@ class SpaceInvadersGame : Game() {
         batch = SpriteBatch()
         this.screens = ScreenManager(this)
         this.screens.updateScreen(Constants.MAIN_MENU_ID)
+        HighScoreHandler().initHighScore()
 
     }
 

@@ -77,7 +77,8 @@ object Constants {
     const val MAIN_MENU_MUSIC = MUSIC + "imperialMarch.mp3"
     const val HELP_MUSIC = MUSIC + "imperialMarch.mp3"
     const val GAME_MUSIC = MUSIC + "starWarsMainTheme.mp3"
-    const val PAUSE_MUSIC = MUSIC + "starWarsMainTheme.mp3"
+    const val GAME_OVER_MUSIC = MUSIC + "evilMortyTheme.mp3"
+
 
     private const val SOUNDS = "sounds/"
     const val SHOT_SOUND = SOUNDS + "shotSound.mp3"
@@ -88,6 +89,8 @@ object Constants {
     const val FNT_FONT = FONTS + "ken_vector.fnt"
     val PNG_FONT = FONTS + "ken_vector.png"
 
+
+    const val HIGHSCORE_FILE = "highscore.txt"
 
     // Texts
 
@@ -100,10 +103,18 @@ object Constants {
 
     const val SCORE_TEXT = "SCORE: "
     const val SCORE_TEXT_X = 15.0F
-    const val SCORE_TEXT_Y = 785.0f
+    const val SCORE_TEXT_Y = 745.0f
 
     const val CURRENT_SCORE_X = 143.0f
-    const val CURRENT_SCORE_Y = 785.0f
+    const val CURRENT_SCORE_Y = SCORE_TEXT_Y
+
+
+    const val HIGH_TEXT = "HIGH: "
+    const val HIGH_TEXT_X = 400.0F
+    const val HIGH_TEXT_Y = SCORE_TEXT_Y
+    const val HIGHSCORE_X = HIGH_TEXT_X + 90.0F
+    const val HIGHSCORE_Y = SCORE_TEXT_Y
+
 
 
 
@@ -133,12 +144,18 @@ object Constants {
     const val GAME_OVER_TEXT_2_X = 90.0F
     const val GAME_OVER_TEXT_2_Y = GAME_OVER_TEXT_1_Y - 150.0F
 
-    const val GO_SCORE_TEXT_X = 200.0F
+    const val GO_SCORE_TEXT_X = 100.0F
     const val GO_SCORE_TEXT_Y = GAME_OVER_TEXT_2_Y - 175.0F
     const val GO_SCORE_X_SCALE = 1.5F
     const val GO_SCORE_Y_SCALE = 1.5F
-    const val GO_CURRENT_SCORE_X = 350.0F
+    const val GO_CURRENT_SCORE_X = GO_SCORE_TEXT_X + 150.0F
     const val GO_CURRENT_SCORE_Y = GO_SCORE_TEXT_Y
+    const val GO_HIGH_TEXT_X = GO_CURRENT_SCORE_X + 100.0F
+    const val GO_HIGH_TEXT_Y = GO_SCORE_TEXT_Y
+    const val GO_HIGH_SCORE_X = GO_HIGH_TEXT_X + 90.0F
+    const val GO_HIGH_SCORE_Y = GO_SCORE_TEXT_Y
+
+
     // Char values
 
     const val RIGHT_ARROW = 22
@@ -147,6 +164,7 @@ object Constants {
     const val ESC_KEY = 131
 
     val CREDITS = "Por Felipe Zorzo Pereira e William Wilbert Vargas - 2018"
+
 
 
 

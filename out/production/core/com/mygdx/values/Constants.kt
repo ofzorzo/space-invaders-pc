@@ -11,7 +11,16 @@ object Constants {
     const val SPACESHIP_INITIAL_X_POS = (BASE_GAME_WIDTH/2)-(SPACESHIP_WIDTH/2)
     const val SPACESHIP_INITIAL_Y_POS = 10.0f
 
-    const val MOVEMENT_SPEED = 5.0f // número de pixels com que um objeto é movido a cada novo frame
+    const val HORDE_X = 75.0f
+    const val HORDE_Y = 805.0f
+    const val SPACE_BETWEEN_LINES_OF_ENEMIES = 5.0f
+    const val SPACE_BETWEEN_COLUMNS_OF_ENEMIES = 50.0f
+
+    const val ENEMY_WIDTH = 50.0f
+    const val ENEMY_HEIGHT = 73.0f
+
+    const val MOVEMENT_SPEED = 5.0f // número de pixels com que a nave é movida a cada novo frame
+    const val SHOT_SPEED = 20.0f
 
     const val BUTTON_WIDTH : Float = 224.0F
     const val BUTTON_HEIGHT : Float = 75.0F
@@ -19,7 +28,6 @@ object Constants {
 
     const val QUIT_BUTTON_X : Float = 188.0F
     const val QUIT_BUTTON_Y : Float = 2 * BUTTON_Y_MARGIN
-
 
     const val HELP_BUTTON_X : Float = QUIT_BUTTON_X
     const val HELP_BUTTON_Y : Float = QUIT_BUTTON_Y + BUTTON_HEIGHT + BUTTON_Y_MARGIN
@@ -54,6 +62,8 @@ object Constants {
     private const val BACKGROUND = TEXTURES + "background/"
     const val BG_IMG_PATH = BACKGROUND + "background.png"
     const val PLAYER_SPACESHIP = TEXTURES + "player2.png"
+    const val SHOTS_TEXTURE = TEXTURES + "laser2.png"
+    const val ENEMY_TEXTURE = TEXTURES + "enemySpaceship.png"
 
     private const val HUD = "hud/"
     const val PLAY_BUT = HUD + "Play.png"
@@ -67,13 +77,20 @@ object Constants {
     const val MAIN_MENU_MUSIC = MUSIC + "imperialMarch.mp3"
     const val HELP_MUSIC = MUSIC + "imperialMarch.mp3"
     const val GAME_MUSIC = MUSIC + "starWarsMainTheme.mp3"
-    const val PAUSE_MUSIC = MUSIC + "starWarsMainTheme.mp3"
+    const val GAME_OVER_MUSIC = MUSIC + "evilMortyTheme.mp3"
+
+
+    private const val SOUNDS = "sounds/"
+    const val SHOT_SOUND = SOUNDS + "shotSound.mp3"
+    const val EXPLOSION_SOUND = SOUNDS + "explosionSound.mp3"
 
     private const val UI = "ui/"
     private const val FONTS = UI + "fonts/"
     const val FNT_FONT = FONTS + "ken_vector.fnt"
     val PNG_FONT = FONTS + "ken_vector.png"
 
+
+    const val HIGHSCORE_FILE = "highscore.txt"
 
     // Texts
 
@@ -86,10 +103,18 @@ object Constants {
 
     const val SCORE_TEXT = "SCORE: "
     const val SCORE_TEXT_X = 15.0F
-    const val SCORE_TEXT_Y = 720.0f
+    const val SCORE_TEXT_Y = 745.0f
 
     const val CURRENT_SCORE_X = 143.0f
-    const val CURRENT_SCORE_Y = 720.0f
+    const val CURRENT_SCORE_Y = SCORE_TEXT_Y
+
+
+    const val HIGH_TEXT = "HIGH: "
+    const val HIGH_TEXT_X = 400.0F
+    const val HIGH_TEXT_Y = SCORE_TEXT_Y
+    const val HIGHSCORE_X = HIGH_TEXT_X + 90.0F
+    const val HIGHSCORE_Y = SCORE_TEXT_Y
+
 
 
 
@@ -119,12 +144,18 @@ object Constants {
     const val GAME_OVER_TEXT_2_X = 90.0F
     const val GAME_OVER_TEXT_2_Y = GAME_OVER_TEXT_1_Y - 150.0F
 
-    const val GO_SCORE_TEXT_X = 200.0F
+    const val GO_SCORE_TEXT_X = 100.0F
     const val GO_SCORE_TEXT_Y = GAME_OVER_TEXT_2_Y - 175.0F
     const val GO_SCORE_X_SCALE = 1.5F
     const val GO_SCORE_Y_SCALE = 1.5F
-    const val GO_CURRENT_SCORE_X = 350.0F
+    const val GO_CURRENT_SCORE_X = GO_SCORE_TEXT_X + 150.0F
     const val GO_CURRENT_SCORE_Y = GO_SCORE_TEXT_Y
+    const val GO_HIGH_TEXT_X = GO_CURRENT_SCORE_X + 100.0F
+    const val GO_HIGH_TEXT_Y = GO_SCORE_TEXT_Y
+    const val GO_HIGH_SCORE_X = GO_HIGH_TEXT_X + 90.0F
+    const val GO_HIGH_SCORE_Y = GO_SCORE_TEXT_Y
+
+
     // Char values
 
     const val RIGHT_ARROW = 22
@@ -133,6 +164,7 @@ object Constants {
     const val ESC_KEY = 131
 
     val CREDITS = "Por Felipe Zorzo Pereira e William Wilbert Vargas - 2018"
+
 
 
 

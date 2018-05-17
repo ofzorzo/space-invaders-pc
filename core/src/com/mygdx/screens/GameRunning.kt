@@ -88,6 +88,9 @@ class GameRunning(game: SpaceInvadersGame) : SuperScreen(game) {
         game.getSpriteBatch().draw(spaceShipTexture, this.spaceShip.getX(), this.spaceShip.getY())
         this.font.draw(game.getSpriteBatch(), this.currentScore.toString(), Constants.CURRENT_SCORE_X, Constants.CURRENT_SCORE_Y)
         this.font.draw(game.getSpriteBatch(), Constants.SCORE_TEXT, Constants.SCORE_TEXT_X, Constants.SCORE_TEXT_Y)
+        this.font.draw(game.getSpriteBatch(), GameInfo.HIGHSCORE.toString(), Constants.HIGHSCORE_X, Constants.HIGHSCORE_Y)
+        this.font.draw(game.getSpriteBatch(), Constants.HIGH_TEXT, Constants.HIGH_TEXT_X, Constants.HIGH_TEXT_Y)
+
 
         drawEnemyHorde()
         drawShots()
@@ -104,6 +107,8 @@ class GameRunning(game: SpaceInvadersGame) : SuperScreen(game) {
     fun setCurrentScore(newScore: Int): Int {
         this.currentScore = newScore
         GameInfo.CURRENT_SCORE = newScore // This value is used on Game over screen
+        if(GameInfo.CURRENT_SCORE > GameInfo.HIGHSCORE)
+            GameInfo.HIGHSCORE = GameInfo.CURRENT_SCORE
         return this.currentScore
     }
 

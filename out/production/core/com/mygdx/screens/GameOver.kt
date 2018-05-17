@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport
 import com.mygdx.game.SpaceInvadersGame
 import com.mygdx.handlers.AgainHandler
 import com.mygdx.handlers.HelpHandler
+import com.mygdx.handlers.HighScoreHandler
 import com.mygdx.handlers.QuitHandler
 import com.mygdx.values.Constants
 import com.mygdx.values.GameInfo
@@ -44,8 +45,6 @@ class GameOver(game: SpaceInvadersGame) : SuperScreen(game) {
         this.creditsFont.data.scaleX = 0.5f
         this.creditsFont.data.scaleY = 0.5f
         this.scoreFont = BitmapFont(Gdx.files.internal(Constants.FNT_FONT))
-        this.creditsFont.data.scaleX = Constants.GO_SCORE_X_SCALE
-        this.creditsFont.data.scaleY = Constants.GO_SCORE_Y_SCALE
 
         //AGAIN BUTTON
         val againTexture = Texture(Constants.AGAIN_BUT)
@@ -71,7 +70,7 @@ class GameOver(game: SpaceInvadersGame) : SuperScreen(game) {
         this.gameOverStage.addActor(this.quitButton)
         Gdx.input.inputProcessor = this.gameOverStage
 
-
+        HighScoreHandler().checkHighScore()
     }
 
     //Called each frame, delta is the time difference to previous call of render
@@ -86,8 +85,12 @@ class GameOver(game: SpaceInvadersGame) : SuperScreen(game) {
         game.getSpriteBatch().draw(bgTexture, 0.0F, 0.0F)
         this.font.draw(game.getSpriteBatch(), Constants.GAME_OVER_TEXT_1, Constants.GAME_OVER_TEXT_1_X, Constants.GAME_OVER_TEXT_1_Y)
         this.font.draw(game.getSpriteBatch(), Constants.GAME_OVER_TEXT_2, Constants.GAME_OVER_TEXT_2_X, Constants.GAME_OVER_TEXT_2_Y)
+
         this.scoreFont.draw(game.getSpriteBatch(), Constants.SCORE_TEXT, Constants.GO_SCORE_TEXT_X, Constants.GO_SCORE_TEXT_Y)
         this.scoreFont.draw(game.getSpriteBatch(), GameInfo.CURRENT_SCORE.toString(), Constants.GO_CURRENT_SCORE_X, Constants.GO_CURRENT_SCORE_Y)
+
+        this.scoreFont.draw(game.getSpriteBatch(), Constants.HIGH_TEXT, Constants.GO_HIGH_TEXT_X, Constants.GO_HIGH_TEXT_Y)
+        this.scoreFont.draw(game.getSpriteBatch(), GameInfo.HIGHSCORE.toString(), Constants.GO_HIGH_SCORE_X, Constants.GO_HIGH_SCORE_Y)
 
         this.creditsFont.draw(game.getSpriteBatch(), Constants.CREDITS, 25.0f,15.0f)
         game.getSpriteBatch().end() // needs to be called after drawing

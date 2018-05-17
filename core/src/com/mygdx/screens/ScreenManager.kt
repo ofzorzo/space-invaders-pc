@@ -17,6 +17,7 @@ class ScreenManager {
     private var help_screen : HelpScreen
     private var mainMenuMusic: Music
     private var gameMusic: Music
+    private var gameOverMusic : Music
 
 
     constructor(game: SpaceInvadersGame){
@@ -37,6 +38,11 @@ class ScreenManager {
         this.gameMusic = Gdx.audio.newMusic(Gdx.files.internal(Constants.GAME_MUSIC))
         this.gameMusic.isLooping = true
         this.gameMusic.volume = 0.10f
+
+        //GAME OVER
+        this.gameOverMusic = Gdx.audio.newMusic(Gdx.files.internal(Constants.GAME_OVER_MUSIC))
+        this.gameOverMusic.isLooping = true
+        this.gameOverMusic.volume = 0.2f
     }
 
     fun restartAndSetGameScreen(){
@@ -60,11 +66,18 @@ class ScreenManager {
 
         if(GameInfo.CURRENT_STATE==Constants.MAIN_MENU_ID){
             this.gameMusic.stop()
+            this.gameOverMusic.stop()
             this.mainMenuMusic.play()
         }
         else if(GameInfo.CURRENT_STATE==Constants.GAME_RUNNING_ID) {
             this.mainMenuMusic.stop()
+            this.gameOverMusic.stop()
             this.gameMusic.play()
+        }
+        else if(GameInfo.CURRENT_STATE == Constants.GAME_OVER_ID){
+            this.gameMusic.stop()
+            this.gameOverMusic.play()
+
         }
 
     }
