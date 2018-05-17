@@ -13,6 +13,7 @@ import com.mygdx.values.GameInfo
 import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.viewport.ScreenViewport
+import com.mygdx.game.EnemyHorde
 import com.mygdx.game.PlayerSpaceship
 import com.mygdx.handlers.InGameHandler
 import com.mygdx.handlers.PlayHandler
@@ -20,10 +21,13 @@ import com.mygdx.handlers.PlayHandler
 class GameRunning(game: SpaceInvadersGame) : SuperScreen(game) {
     private lateinit var bgTexture : Texture
     private lateinit var spaceShipTexture : Texture
+    private lateinit var shotsTexture : Texture
+    private lateinit var enemyTexture : Texture
     private lateinit var font : BitmapFont
     private lateinit var playStage : Stage
     private lateinit var spaceShip: PlayerSpaceship
 
+    private lateinit var enemyHorde: EnemyHorde
     private var currentScore: Int = 0
     private var initialized : Boolean = false
 
@@ -52,9 +56,14 @@ class GameRunning(game: SpaceInvadersGame) : SuperScreen(game) {
         this.font = BitmapFont(Gdx.files.internal(Constants.FNT_FONT))
 
         this.spaceShipTexture = Texture(Pixmap(Gdx.files.internal(Constants.PLAYER_SPACESHIP)))
+        this.shotsTexture = Texture(Pixmap(Gdx.files.internal(Constants.SHOTS_TEXTURE)))
+        this.enemyTexture = Texture(Pixmap(Gdx.files.internal(Constants.ENEMY_TEXTURE)))
 
         //Initialized here to pass game, this is needed to change screens in game
         this.spaceShip = PlayerSpaceship(this.game)
+        this.enemyHorde = EnemyHorde(this.spaceShip, this)
+
+
 
         this.playStage = Stage(ScreenViewport())
         this.playStage.addActor(this.spaceShip)
@@ -79,6 +88,10 @@ class GameRunning(game: SpaceInvadersGame) : SuperScreen(game) {
         game.getSpriteBatch().draw(spaceShipTexture, this.spaceShip.getX(), this.spaceShip.getY())
         this.font.draw(game.getSpriteBatch(), this.currentScore.toString(), Constants.CURRENT_SCORE_X, Constants.CURRENT_SCORE_Y)
         this.font.draw(game.getSpriteBatch(), Constants.SCORE_TEXT, Constants.SCORE_TEXT_X, Constants.SCORE_TEXT_Y)
+
+        drawEnemyHorde()
+        drawShots()
+
         game.getSpriteBatch().end() // needs to be called after drawing
         this.playStage.act(Gdx.graphics.deltaTime)
         this.playStage.draw()
@@ -94,6 +107,25 @@ class GameRunning(game: SpaceInvadersGame) : SuperScreen(game) {
         return this.currentScore
     }
 
+    fun drawEnemyHorde(){
+        this.enemyHorde.createHordeIfNeeded()
+        val enemies = this.enemyHorde.getEnemyHorde()
+        for(i in 0..enemies.size-1){
+            game.getSpriteBatch().draw(enemyTexture, enemies[i].getX(), enemies[i].getY())
+        }
+        this.enemyHorde.moveHorde()
+        this.enemyHorde.checkCollision()
+    }
+
+    fun drawShots(){
+        val moveShots = this.spaceShip.getShots()
+        this.spaceShip.removeOutterShots()
+        for(i in 0..moveShots.size-1){
+            game.getSpriteBatch().draw(shotsTexture, moveShots[i].first, moveShots[i].second)
+            moveShots[i] = Pair(moveShots[i].first, moveShots[i].second + Constants.SHOT_SPEED)
+        }
+    }
+
     override fun hide() {
         println("running hide()")
         Gdx.input.inputProcessor = null
@@ -104,4 +136,5 @@ class GameRunning(game: SpaceInvadersGame) : SuperScreen(game) {
         println("running resume()")
         Gdx.input.inputProcessor = this.playStage
     }
+
 }

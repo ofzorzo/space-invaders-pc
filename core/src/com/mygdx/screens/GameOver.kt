@@ -44,8 +44,6 @@ class GameOver(game: SpaceInvadersGame) : SuperScreen(game) {
         this.creditsFont.data.scaleX = 0.5f
         this.creditsFont.data.scaleY = 0.5f
         this.scoreFont = BitmapFont(Gdx.files.internal(Constants.FNT_FONT))
-        this.creditsFont.data.scaleX = Constants.GO_SCORE_X_SCALE
-        this.creditsFont.data.scaleY = Constants.GO_SCORE_Y_SCALE
 
         //AGAIN BUTTON
         val againTexture = Texture(Constants.AGAIN_BUT)

@@ -11,7 +11,16 @@ object Constants {
     const val SPACESHIP_INITIAL_X_POS = (BASE_GAME_WIDTH/2)-(SPACESHIP_WIDTH/2)
     const val SPACESHIP_INITIAL_Y_POS = 10.0f
 
-    const val MOVEMENT_SPEED = 5.0f // número de pixels com que um objeto é movido a cada novo frame
+    const val HORDE_X = 75.0f
+    const val HORDE_Y = 805.0f
+    const val SPACE_BETWEEN_LINES_OF_ENEMIES = 5.0f
+    const val SPACE_BETWEEN_COLUMNS_OF_ENEMIES = 50.0f
+
+    const val ENEMY_WIDTH = 50.0f
+    const val ENEMY_HEIGHT = 73.0f
+
+    const val MOVEMENT_SPEED = 5.0f // número de pixels com que a nave é movida a cada novo frame
+    const val SHOT_SPEED = 20.0f
 
     const val BUTTON_WIDTH : Float = 224.0F
     const val BUTTON_HEIGHT : Float = 75.0F
@@ -19,7 +28,6 @@ object Constants {
 
     const val QUIT_BUTTON_X : Float = 188.0F
     const val QUIT_BUTTON_Y : Float = 2 * BUTTON_Y_MARGIN
-
 
     const val HELP_BUTTON_X : Float = QUIT_BUTTON_X
     const val HELP_BUTTON_Y : Float = QUIT_BUTTON_Y + BUTTON_HEIGHT + BUTTON_Y_MARGIN
@@ -54,6 +62,8 @@ object Constants {
     private const val BACKGROUND = TEXTURES + "background/"
     const val BG_IMG_PATH = BACKGROUND + "background.png"
     const val PLAYER_SPACESHIP = TEXTURES + "player2.png"
+    const val SHOTS_TEXTURE = TEXTURES + "laser2.png"
+    const val ENEMY_TEXTURE = TEXTURES + "enemySpaceship.png"
 
     private const val HUD = "hud/"
     const val PLAY_BUT = HUD + "Play.png"
@@ -68,6 +78,10 @@ object Constants {
     const val HELP_MUSIC = MUSIC + "imperialMarch.mp3"
     const val GAME_MUSIC = MUSIC + "starWarsMainTheme.mp3"
     const val PAUSE_MUSIC = MUSIC + "starWarsMainTheme.mp3"
+
+    private const val SOUNDS = "sounds/"
+    const val SHOT_SOUND = SOUNDS + "shotSound.mp3"
+    const val EXPLOSION_SOUND = SOUNDS + "explosionSound.mp3"
 
     private const val UI = "ui/"
     private const val FONTS = UI + "fonts/"
@@ -86,10 +100,10 @@ object Constants {
 
     const val SCORE_TEXT = "SCORE: "
     const val SCORE_TEXT_X = 15.0F
-    const val SCORE_TEXT_Y = 720.0f
+    const val SCORE_TEXT_Y = 785.0f
 
     const val CURRENT_SCORE_X = 143.0f
-    const val CURRENT_SCORE_Y = 720.0f
+    const val CURRENT_SCORE_Y = 785.0f
 
 
 
