@@ -13,6 +13,8 @@ object GameInfo {
     var CURRENT_WAVE:Int = 0
     var CURRENT_SCORE:Int = 0
 
+    var HIGHSCORE : Int = 0
+
     var CURRENT_STATE = Constants.MAIN_MENU_ID
     var PREVIOUS_STATE = Constants.MAIN_MENU_ID
 

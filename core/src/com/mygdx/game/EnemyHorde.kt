@@ -6,6 +6,7 @@ import com.mygdx.values.Constants
 import com.mygdx.game.PlayerSpaceship
 import com.mygdx.screens.GameRunning
 import com.badlogic.gdx.math.Intersector
+import com.badlogic.gdx.math.Polygon
 
 class EnemyHorde(val playerSpaceship: PlayerSpaceship, val gameRunning: GameRunning) {
 
@@ -102,23 +103,46 @@ class EnemyHorde(val playerSpaceship: PlayerSpaceship, val gameRunning: GameRunn
         }
     }
 
+    fun collision(enemy: EnemySpaceship, shootx: Float, shooty: Float) : Boolean{
+
+        var shootPoly = Polygon()
+        var verticesForShoot = floatArrayOf(
+                shootx, shooty,
+                shootx + Constants.SHOT_WIDTH, shooty,
+                shootx, shooty + Constants.SHOT_HEIGHT,
+                shootx + Constants.SHOT_WIDTH, shooty + Constants.SHOT_HEIGHT)
+        shootPoly.vertices = verticesForShoot
+        return (Intersector.overlapConvexPolygons(enemy.getEnemyPoly(), shootPoly))
+
+    }
+
     fun checkCollision(){
         val shotIterator = this.playerSpaceship.getShots().iterator()
         val enemyIterator = this.enemyHorde.iterator()
+        var collision : Boolean
         for (shot in shotIterator){
-            for (enemy in enemyIterator){
-                if (shot.first >= enemy.getX() && shot.first <= (enemy.getX()+Constants.ENEMY_WIDTH)){
-                    if(shot.second >= enemy.getY() && shot.second <= (enemy.getY()+Constants.ENEMY_HEIGHT)){
-                        enemy.setHealth(enemy.getHealth()-1)
-                        if(enemy.getHealth()==0) {
-                            enemyIterator.remove()
-                            gameRunning.setCurrentScore(gameRunning.getCurrentScore() + 50)
-                        }
-                        shotIterator.remove()
-                        this.explosionSound.play()
+            collision = false
+            while (enemyIterator.hasNext() && !collision){
+                val enemy = enemyIterator.next()
+
+                if(collision(enemy, shot.first, shot.second))
+                {
+                    collision = true
+                    enemy.setHealth(enemy.getHealth()-1)
+                    if(enemy.getHealth()==0) {
+                        enemyIterator.remove()
+                        gameRunning.setCurrentScore(gameRunning.getCurrentScore() + 50)
                     }
+                    else
+                        enemy.takeDamage()
+
+                    this.explosionSound.play()
+                    shotIterator.remove()
+
+
                 }
             }
+
         }
     }
 

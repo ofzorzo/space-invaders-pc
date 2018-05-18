@@ -27,7 +27,7 @@ class PlayerSpaceship : Actor{
 
     fun createShot(){
         val x: Float = Constants.SPACESHIP_WIDTH/2 + this.getX() - 7.0f
-        val y: Float = Constants.SPACESHIP_HEIGHT + 15.0f
+        val y: Float = Constants.SPACESHIP_HEIGHT
         shots.add(Pair(x, y))
         this.shotSound.play()
     }

@@ -22,6 +22,9 @@ object Constants {
     const val MOVEMENT_SPEED = 5.0f // número de pixels com que a nave é movida a cada novo frame
     const val SHOT_SPEED = 20.0f
 
+    const val SHOT_HEIGHT = 27
+    const val SHOT_WIDTH = 8
+
     const val BUTTON_WIDTH : Float = 224.0F
     const val BUTTON_HEIGHT : Float = 75.0F
     private const val BUTTON_Y_MARGIN : Float = 40.0F
@@ -104,10 +107,10 @@ object Constants {
 
     const val SCORE_TEXT = "SCORE: "
     const val SCORE_TEXT_X = 15.0F
-    const val SCORE_TEXT_Y = 785.0f
+    const val SCORE_TEXT_Y = 740.0f
 
     const val CURRENT_SCORE_X = 143.0f
-    const val CURRENT_SCORE_Y = 785.0f
+    const val CURRENT_SCORE_Y = 740.0f
 
     const val HIGH_TEXT = "HIGH: "
     const val HIGH_TEXT_X = 400.0F
@@ -162,6 +165,8 @@ object Constants {
     const val ESC_KEY = 131
 
     val CREDITS = "Por Felipe Zorzo Pereira e William Wilbert Vargas - 2018"
+    val RECOVER_TIME: Int = 20
+
 
 
 

@@ -119,7 +119,14 @@ class GameRunning(game: SpaceInvadersGame) : SuperScreen(game) {
         this.enemyHorde.checkCollision()
         this.enemyHorde.moveHorde()
         for(i in 0..enemies.size-1){
-            game.getSpriteBatch().draw(enemyTexture, enemies[i].getX(), enemies[i].getY())
+            var enemy = this.enemyHorde.getEnemyHorde()[i]
+            if (!enemy.wasHit() || enemy.getRecoverTime() % 10 < 5) {
+                game.getSpriteBatch().draw(enemyTexture, enemies[i].getX(), enemies[i].getY())
+            }
+
+            enemy.decreaseRecoverTime()
+
+
         }
     }
 

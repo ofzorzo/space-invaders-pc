@@ -16,7 +16,6 @@ class InGameHandler(val spaceShip: PlayerSpaceship, val game: SpaceInvadersGame)
             62 -> this.spaceShip.createShot()
             Constants.PAUSE_KEY, Constants.ESC_KEY ->
                 this.game.getScreenManager().updateScreen(Constants.PAUSE_ID)
-            45 -> this.game.getScreenManager().updateScreen(Constants.GAME_OVER_ID) // TESTE - vai direto para game over quando aperta espeço
             else -> println("Pressed $keycode") // This is equal to "Pressed " + keycode
         }
         return super.keyDown(event, keycode)

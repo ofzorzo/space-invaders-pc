@@ -10,6 +10,8 @@ class EnemySpaceship : Actor{
     private var health: Int = 1
     private var verticesForEnemy: FloatArray
     private var enemyPoly = Polygon()
+    private var hitted: Boolean = false
+    private var recoverTime : Int = 0
 
     constructor(x: Float, y: Float, health: Int) : super(){
         this.setPosition(x, y)
@@ -40,6 +42,26 @@ class EnemySpaceship : Actor{
 
     fun setHealth(newHealth: Int){
         this.health = newHealth
+    }
+
+    fun takeDamage() {
+        this.hitted = true
+        this.recoverTime = Constants.RECOVER_TIME
+    }
+
+    fun wasHit(): Boolean {
+        return this.hitted
+
+    }
+
+    fun decreaseRecoverTime() {
+        this.recoverTime -= 1
+        if (this.recoverTime == 0)
+            this.hitted = false
+    }
+
+    fun getRecoverTime() : Int{
+        return this.recoverTime
     }
 
 }
