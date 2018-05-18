@@ -82,6 +82,8 @@ class GameRunning(game: SpaceInvadersGame) : SuperScreen(game) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT) //Remove everything from the screen
 
         this.spaceShip.move()
+        if(this.enemyHorde.checkEndOfGame())
+            this.game.getScreenManager().updateScreen(Constants.GAME_OVER_ID)
 
         game.getSpriteBatch().begin() // needs to be called before draw
         game.getSpriteBatch().draw(bgTexture, 0.0F, 0.0F)
@@ -91,9 +93,8 @@ class GameRunning(game: SpaceInvadersGame) : SuperScreen(game) {
         this.font.draw(game.getSpriteBatch(), GameInfo.HIGHSCORE.toString(), Constants.HIGHSCORE_X, Constants.HIGHSCORE_Y)
         this.font.draw(game.getSpriteBatch(), Constants.HIGH_TEXT, Constants.HIGH_TEXT_X, Constants.HIGH_TEXT_Y)
 
-
-        drawEnemyHorde()
         drawShots()
+        drawEnemyHorde()
 
         game.getSpriteBatch().end() // needs to be called after drawing
         this.playStage.act(Gdx.graphics.deltaTime)
@@ -115,19 +116,19 @@ class GameRunning(game: SpaceInvadersGame) : SuperScreen(game) {
     fun drawEnemyHorde(){
         this.enemyHorde.createHordeIfNeeded()
         val enemies = this.enemyHorde.getEnemyHorde()
+        this.enemyHorde.checkCollision()
+        this.enemyHorde.moveHorde()
         for(i in 0..enemies.size-1){
             game.getSpriteBatch().draw(enemyTexture, enemies[i].getX(), enemies[i].getY())
         }
-        this.enemyHorde.moveHorde()
-        this.enemyHorde.checkCollision()
     }
 
     fun drawShots(){
         val moveShots = this.spaceShip.getShots()
         this.spaceShip.removeOutterShots()
         for(i in 0..moveShots.size-1){
-            game.getSpriteBatch().draw(shotsTexture, moveShots[i].first, moveShots[i].second)
             moveShots[i] = Pair(moveShots[i].first, moveShots[i].second + Constants.SHOT_SPEED)
+            game.getSpriteBatch().draw(shotsTexture, moveShots[i].first, moveShots[i].second)
         }
     }
 
