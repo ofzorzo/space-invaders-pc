@@ -6,12 +6,13 @@ import java.io.File
 import java.io.FileNotFoundException
 import java.io.InputStream
 
-class HighScoreHandler(){
+class HighScoreHandler{
 
     fun initHighScore(){
         GameInfo.HIGHSCORE = this.getHighScore()
 
     }
+    //If nowhere else overload polymorphism can be used here introducing a fake HS
 
     private fun getHighScore() : Int{
         return try {
@@ -29,7 +30,7 @@ class HighScoreHandler(){
         }
     }
 
-    fun writeHighScore(score : Int){
+    private fun writeHighScore(score : Int){
         File(Constants.HIGHSCORE_FILE).writeText(score.toString())
 
     }

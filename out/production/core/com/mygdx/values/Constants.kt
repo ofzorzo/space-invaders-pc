@@ -56,7 +56,6 @@ object Constants {
     const val GAME_RUNNING_ID = 1
     const val PAUSE_ID = 2
     const val GAME_OVER_ID = 3
-    const val WINNER_ID = 4
     const val HELP_ID = 5
 
     // File paths
@@ -163,6 +162,7 @@ object Constants {
     const val LEFT_ARROW = 21
     const val PAUSE_KEY = 44
     const val ESC_KEY = 131
+    const val SPACE_KEY = 62
 
     val CREDITS = "Por Felipe Zorzo Pereira e William Wilbert Vargas - 2018"
     val RECOVER_TIME: Int = 20

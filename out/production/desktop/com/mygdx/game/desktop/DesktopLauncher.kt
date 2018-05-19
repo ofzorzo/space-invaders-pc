@@ -13,6 +13,7 @@ object DesktopLauncher {
         config.width = Constants.BASE_GAME_WIDTH
         config.height = Constants.BASE_GAME_HEIGHT
         config.forceExit = true // Allows the exit operation to occur
+        config.foregroundFPS = 60
         LwjglApplication(SpaceInvadersGame(), config)
     }
 }

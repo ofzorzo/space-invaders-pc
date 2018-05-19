@@ -13,7 +13,6 @@ class ScreenManager {
     private var game_running_screen : GameRunning
     private var main_menu_screen : MainMenu
     private var pause_screen : Pause
-    private var winner_screen : Winner
     private var help_screen : HelpScreen
     private var mainMenuMusic: Music
     private var gameMusic: Music
@@ -26,7 +25,6 @@ class ScreenManager {
         this.game_over_screen = GameOver(game)
         this.main_menu_screen = MainMenu(game)
         this.pause_screen = Pause(game)
-        this.winner_screen = Winner(game)
         this.help_screen = HelpScreen(game)
 
         //MENU MUSIC
@@ -59,7 +57,6 @@ class ScreenManager {
                     Constants.GAME_RUNNING_ID -> this.game_running_screen
                     Constants.PAUSE_ID -> this.pause_screen
                     Constants.MAIN_MENU_ID -> this.main_menu_screen
-                    Constants.WINNER_ID -> this.winner_screen
                     Constants.HELP_ID -> this.help_screen
                     else -> this.game.screen
                 }

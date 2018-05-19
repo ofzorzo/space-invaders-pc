@@ -103,7 +103,8 @@ class EnemyHorde(val playerSpaceship: PlayerSpaceship, val gameRunning: GameRunn
         }
     }
 
-    fun collision(enemy: EnemySpaceship, shootx: Float, shooty: Float) : Boolean{
+    //collision of a shot with an enemy
+    private fun collision(enemy: EnemySpaceship, shootx: Float, shooty: Float) : Boolean{
 
         var shootPoly = Polygon()
         var verticesForShoot = floatArrayOf(
@@ -114,6 +115,11 @@ class EnemyHorde(val playerSpaceship: PlayerSpaceship, val gameRunning: GameRunn
         shootPoly.vertices = verticesForShoot
         return (Intersector.overlapConvexPolygons(enemy.getEnemyPoly(), shootPoly))
 
+    }
+
+    //collision of an enemy with the player
+    private fun collision(enemy : EnemySpaceship, player : PlayerSpaceship) : Boolean{
+        return (Intersector.overlapConvexPolygons(enemy.getEnemyPoly(), player.getPlayerPoly()))
     }
 
     fun checkCollision(){
@@ -151,7 +157,7 @@ class EnemyHorde(val playerSpaceship: PlayerSpaceship, val gameRunning: GameRunn
         for (enemy in enemyIterator) {
             if (enemy.getY() <= 0)
                 return true
-            if(Intersector.overlapConvexPolygons(enemy.getEnemyPoly(), this.playerSpaceship.getPlayerPoly()))
+            if(collision(enemy, this.playerSpaceship))
             {
                 return true
             }
