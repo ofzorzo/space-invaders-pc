@@ -77,6 +77,24 @@ class GameRunning(game: SpaceInvadersGame) : SuperScreen(game) {
         this.currentScore = 0
     }
 
+    private fun drawHorde(){
+        val enemies = this.enemyHorde.getEnemyHorde()
+        for(i in 0..enemies.size-1){
+            val enemy = this.enemyHorde.getEnemyHorde()[i]
+            if (!enemy.wasHit() || enemy.getRecoverTime() % 10 < 5) {
+                game.getSpriteBatch().draw(enemyTexture, enemies[i].getX(), enemies[i].getY())
+            }
+            enemy.decreaseRecoverTime()
+        }
+    }
+
+    private fun drawShots(){
+        val moveShots = this.spaceShip.getShots()
+        for(i in 0..moveShots.size-1){
+            game.getSpriteBatch().draw(shotsTexture, moveShots[i].first, moveShots[i].second)
+        }
+    }
+
     override fun render(delta: Float) {
         Gdx.gl.glClearColor(1.0F,0.0F,0.0F,1.0F)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT) //Remove everything from the screen
@@ -93,12 +111,25 @@ class GameRunning(game: SpaceInvadersGame) : SuperScreen(game) {
         this.font.draw(game.getSpriteBatch(), GameInfo.HIGHSCORE.toString(), Constants.HIGHSCORE_X, Constants.HIGHSCORE_Y)
         this.font.draw(game.getSpriteBatch(), Constants.HIGH_TEXT, Constants.HIGH_TEXT_X, Constants.HIGH_TEXT_Y)
 
+        //cria e move horda
+        this.enemyHorde.createHordeIfNeeded()
+        this.enemyHorde.moveHorde()
+
+        //destrói tiros que saíram da tela e move os demais
+        this.spaceShip.removeOutterShots()
+        this.spaceShip.moveShots()
+
+        //desenha horda
+        drawHorde()
+        //desenha tiros
         drawShots()
-        drawEnemyHorde()
 
         game.getSpriteBatch().end() // needs to be called after drawing
         this.playStage.act(Gdx.graphics.deltaTime)
         this.playStage.draw()
+
+        //checamos colisão sempre após desenhar, afinal devemos mostrar que objetos colidiram antes de destruí-los
+        this.enemyHorde.checkCollision()
     }
 
     fun getCurrentScore(): Int {
@@ -111,32 +142,6 @@ class GameRunning(game: SpaceInvadersGame) : SuperScreen(game) {
         if(GameInfo.CURRENT_SCORE > GameInfo.HIGHSCORE)
             GameInfo.HIGHSCORE = GameInfo.CURRENT_SCORE
         return this.currentScore
-    }
-
-    fun drawEnemyHorde(){
-        this.enemyHorde.createHordeIfNeeded()
-        val enemies = this.enemyHorde.getEnemyHorde()
-        this.enemyHorde.checkCollision()
-        this.enemyHorde.moveHorde()
-        for(i in 0..enemies.size-1){
-            var enemy = this.enemyHorde.getEnemyHorde()[i]
-            if (!enemy.wasHit() || enemy.getRecoverTime() % 10 < 5) {
-                game.getSpriteBatch().draw(enemyTexture, enemies[i].getX(), enemies[i].getY())
-            }
-
-            enemy.decreaseRecoverTime()
-
-
-        }
-    }
-
-    fun drawShots(){
-        val moveShots = this.spaceShip.getShots()
-        this.spaceShip.removeOutterShots()
-        for(i in 0..moveShots.size-1){
-            moveShots[i] = Pair(moveShots[i].first, moveShots[i].second + Constants.SHOT_SPEED)
-            game.getSpriteBatch().draw(shotsTexture, moveShots[i].first, moveShots[i].second)
-        }
     }
 
     override fun hide() {

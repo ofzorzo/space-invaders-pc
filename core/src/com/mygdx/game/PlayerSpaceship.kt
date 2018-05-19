@@ -45,6 +45,12 @@ class PlayerSpaceship : Actor{
         }
     }
 
+    fun moveShots(){
+        for(i in 0..this.shots.size-1){
+            this.shots[i] = Pair(this.shots[i].first, this.shots[i].second + Constants.SHOT_SPEED)
+        }
+    }
+
     fun getShots(): MutableList<Pair<Float, Float>> {
         return this.shots
     }
