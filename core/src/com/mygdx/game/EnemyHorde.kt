@@ -2,6 +2,7 @@ package com.mygdx.game
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.audio.Sound
+import com.badlogic.gdx.graphics.Texture
 import com.mygdx.values.Constants
 import com.mygdx.game.PlayerSpaceship
 import com.mygdx.screens.GameRunning
@@ -61,45 +62,12 @@ class EnemyHorde(val playerSpaceship: PlayerSpaceship, val gameRunning: GameRunn
                 break
             }
         }
-        //moves every ship to the left
-        if(this.moveLeft==true){
-            for(i in 0..this.enemyHorde.size-1){
-                this.enemyHorde[i].setPosition(this.enemyHorde[i].getX()-(2.0f*this.difficulty), this.enemyHorde[i].getY())
-                val verticesForEnemy = this.enemyHorde[i].getVerticesForEnemy()
-                for(j in 0..verticesForEnemy.size-1)
-                    if(j%2 == 0) {
-                        verticesForEnemy[j] = verticesForEnemy[j] - (2.0f * this.difficulty)
-                        this.enemyHorde[i].setVerticesForEnemy(verticesForEnemy)
-                        this.enemyHorde[i].updateEnemyPoly()
-                    }
-            }
-        }
-        //moves every ship to the right
-        else
-        {
-            for(i in 0..this.enemyHorde.size-1){
-                this.enemyHorde[i].setPosition(this.enemyHorde[i].getX()+(2.0f*this.difficulty), this.enemyHorde[i].getY())
-                val verticesForEnemy = this.enemyHorde[i].getVerticesForEnemy()
-                for(j in 0..verticesForEnemy.size-1)
-                    if(j%2 == 0){
-                        verticesForEnemy[j] = verticesForEnemy[j] + (2.0f*this.difficulty)
-                        this.enemyHorde[i].setVerticesForEnemy(verticesForEnemy)
-                        this.enemyHorde[i].updateEnemyPoly()
-                    }
-            }
-        }
-        //if applicable, changes lanes
-        if(this.changeLane==true){
-            for(i in 0..this.enemyHorde.size-1){
-                this.enemyHorde[i].setPosition(this.enemyHorde[i].getX(), this.enemyHorde[i].getY()-18.0f)
-                val verticesForEnemy = this.enemyHorde[i].getVerticesForEnemy()
-                for(j in 0..verticesForEnemy.size-1)
-                    if(j%2 != 0){
-                        verticesForEnemy[j] = verticesForEnemy[j] - 18.0f
-                        this.enemyHorde[i].setVerticesForEnemy(verticesForEnemy)
-                        this.enemyHorde[i].updateEnemyPoly()
-                    }
-            }
+        for(i in 0..this.enemyHorde.size-1){
+            enemyHorde[i].setChangeLane(this.changeLane)
+            enemyHorde[i].setSpeed(2.0f*this.difficulty)
+            enemyHorde[i].publicSetMoveRight(this.moveRight)
+            enemyHorde[i].publicSetMoveLeft(this.moveLeft)
+            this.enemyHorde[i].move()
         }
     }
 
@@ -113,13 +81,13 @@ class EnemyHorde(val playerSpaceship: PlayerSpaceship, val gameRunning: GameRunn
                 shootx, shooty + Constants.SHOT_HEIGHT,
                 shootx + Constants.SHOT_WIDTH, shooty + Constants.SHOT_HEIGHT)
         shootPoly.vertices = verticesForShoot
-        return (Intersector.overlapConvexPolygons(enemy.getEnemyPoly(), shootPoly))
+        return (Intersector.overlapConvexPolygons(enemy.getSpaceshipPoly(), shootPoly))
 
     }
 
     //collision of an enemy with the player
     private fun collision(enemy : EnemySpaceship, player : PlayerSpaceship) : Boolean{
-        return (Intersector.overlapConvexPolygons(enemy.getEnemyPoly(), player.getPlayerPoly()))
+        return (Intersector.overlapConvexPolygons(enemy.getSpaceshipPoly(), player.getSpaceshipPoly()))
     }
 
     fun checkCollision(){
@@ -142,9 +110,9 @@ class EnemyHorde(val playerSpaceship: PlayerSpaceship, val gameRunning: GameRunn
                 {
                     //println("\n\ncolisao")
                     collision = true
-                    enemy.setHealth(enemy.getHealth()-1)
+                    enemy.publicSetHealth(enemy.publicGetHealth()-1)
                     //println("nro anterior de enemies: " + this.enemyHorde.size)
-                    if(enemy.getHealth()==0) {
+                    if(enemy.publicGetHealth()==0) {
                         enemyIterator.remove()
                         gameRunning.setCurrentScore(gameRunning.getCurrentScore() + 50)
                     }
@@ -161,6 +129,13 @@ class EnemyHorde(val playerSpaceship: PlayerSpaceship, val gameRunning: GameRunn
             }
             //index = index + 1
         }
+        val enemyIterator = this.enemyHorde.iterator()
+        for (enemy in enemyIterator){
+            if(collision(enemy, this.playerSpaceship))
+            {
+                this.playerSpaceship.publicSetHealth(this.playerSpaceship.publicGetHealth()-1)
+            }
+        }
     }
 
     fun checkEndOfGame(): Boolean {
@@ -168,13 +143,23 @@ class EnemyHorde(val playerSpaceship: PlayerSpaceship, val gameRunning: GameRunn
         for (enemy in enemyIterator) {
             if (enemy.getY() <= 0)
                 return true
-            if(collision(enemy, this.playerSpaceship))
+            if(this.playerSpaceship.publicGetHealth()<1)
             {
                 return true
             }
 
         }
         return false
+    }
+
+    fun draw(game: SpaceInvadersGame, texture: Texture){
+        for(i in 0..this.enemyHorde.size-1){
+            val enemy = this.enemyHorde[i]
+            if (!enemy.wasHit() || enemy.getRecoverTime() % 10 < 5) {
+                this.enemyHorde[i].draw(game, texture)
+            }
+            enemy.decreaseRecoverTime()
+        }
     }
 
 }

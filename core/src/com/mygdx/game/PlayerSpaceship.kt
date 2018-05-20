@@ -2,27 +2,66 @@ package com.mygdx.game
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.audio.Sound
+import com.badlogic.gdx.graphics.Pixmap
+import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.math.Polygon
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.mygdx.handlers.InGameHandler
 import com.mygdx.values.Constants
 
 
-class PlayerSpaceship : Actor{
+class PlayerSpaceship : Spaceship{
 
+    override var health: Int = 1
+    override var vertices = floatArrayOf(0.0f+Constants.SPACESHIP_INITIAL_X_POS, 9.0f+Constants.SPACESHIP_INITIAL_Y_POS, 48.0f+Constants.SPACESHIP_INITIAL_X_POS, 75.0f+Constants.SPACESHIP_INITIAL_Y_POS, 98.0f+Constants.SPACESHIP_INITIAL_X_POS, 9.0f+Constants.SPACESHIP_INITIAL_Y_POS)
+    override var poly = Polygon()
+    override var moveRight: Boolean = false
+    override var moveLeft: Boolean = false
     private var shots = mutableListOf< Pair<Float, Float> >()
-    private var moveRight: Boolean = false
-    private var moveLeft: Boolean = false
     private var shotSound: Sound
-    private var verticesForPlayer = floatArrayOf(0.0f+Constants.SPACESHIP_INITIAL_X_POS, 9.0f+Constants.SPACESHIP_INITIAL_Y_POS, 48.0f+Constants.SPACESHIP_INITIAL_X_POS, 75.0f+Constants.SPACESHIP_INITIAL_Y_POS, 98.0f+Constants.SPACESHIP_INITIAL_X_POS, 9.0f+Constants.SPACESHIP_INITIAL_Y_POS)
-    private var playerPoly = Polygon()
+
 
     constructor(game: SpaceInvadersGame) : super(){
         this.setPosition(Constants.SPACESHIP_INITIAL_X_POS, Constants.SPACESHIP_INITIAL_Y_POS)
         this.setSize(Constants.SPACESHIP_WIDTH, Constants.SPACESHIP_HEIGHT)
         this.addListener(InGameHandler(this, game))
         this.shotSound = Gdx.audio.newSound(Gdx.files.internal(Constants.SHOT_SOUND))
-        playerPoly.setVertices(verticesForPlayer)
+        this.updateSpaceshipPoly()
+    }
+
+    override fun moveRight(deltaX: Float){
+        if( (this.moveRight == true) && (this.getX() + deltaX + Constants.SPACESHIP_WIDTH <= Constants.BASE_GAME_WIDTH) ) {
+            this.setPosition(this.getX() + deltaX, this.getY())
+            for (i in 0..this.vertices.size-1) {
+                if(i%2 == 0) {
+                    this.vertices[i] = this.vertices[i] + deltaX
+                    this.updateSpaceshipPoly()
+                }
+            }
+
+        }
+    }
+
+    override fun moveLeft(deltaX: Float){
+        if( (this.moveLeft == true) && (this.getX()+deltaX >= 0) ) {
+            this.setPosition(this.getX()+deltaX, this.getY())
+            for (i in 0..this.vertices.size-1) {
+                if(i%2 == 0) {
+                    this.vertices[i] = this.vertices[i]+deltaX
+                    this.updateSpaceshipPoly()
+                }
+            }
+        }
+    }
+
+    override fun move(){
+        moveRight(Constants.MOVEMENT_SPEED)
+        moveLeft(-Constants.MOVEMENT_SPEED)
+    }
+
+    override fun draw(game: SpaceInvadersGame, texture: Texture) {
+        game.getSpriteBatch().draw(texture, this.getX(), this.getY())
+        drawShots(game)
     }
 
     fun createShot(){
@@ -30,19 +69,6 @@ class PlayerSpaceship : Actor{
         val y: Float = Constants.SPACESHIP_HEIGHT
         shots.add(Pair(x, y))
         this.shotSound.play()
-    }
-
-    fun createShot(x: Float, y: Float){
-        shots.add(Pair(x, y))
-    }
-
-    fun removeOutterShots(){
-        val shotIterator = this.shots.iterator()
-        for (shot in shotIterator){
-            if(shot.second > Constants.BASE_GAME_HEIGHT){
-                shotIterator.remove()
-            }
-        }
     }
 
     fun moveShots(){
@@ -55,58 +81,18 @@ class PlayerSpaceship : Actor{
         return this.shots
     }
 
-    fun move(){
-        moveRight()
-        moveLeft()
-    }
-
-    fun moveRight(){
-        if( (this.moveRight == true) && (this.getX()+Constants.SPACESHIP_WIDTH+Constants.MOVEMENT_SPEED <= Constants.BASE_GAME_WIDTH) ) {
-            this.setPosition(this.getX() + Constants.MOVEMENT_SPEED, this.getY())
-            for (i in 0..this.verticesForPlayer.size-1) {
-                if(i%2 == 0) {
-                    this.verticesForPlayer[i] = this.verticesForPlayer[i] + Constants.MOVEMENT_SPEED
-                    playerPoly.setVertices(verticesForPlayer)
-                }
-            }
-
+    fun drawShots(game: SpaceInvadersGame){
+        for(i in 0..this.shots.size-1){
+            game.getSpriteBatch().draw(Texture(Pixmap(Gdx.files.internal(Constants.SHOTS_TEXTURE))), this.shots[i].first, this.shots[i].second)
         }
     }
 
-    fun moveLeft(){
-        if( (this.moveLeft == true) && (this.getX()-Constants.MOVEMENT_SPEED >= 0) ) {
-            this.setPosition(this.getX() - Constants.MOVEMENT_SPEED, this.getY())
-            for (i in 0..this.verticesForPlayer.size-1) {
-                if(i%2 == 0) {
-                    this.verticesForPlayer[i] = this.verticesForPlayer[i] - Constants.MOVEMENT_SPEED
-                    playerPoly.setVertices(verticesForPlayer)
-                }
+    fun removeOutterShots(){
+        val shotIterator = this.shots.iterator()
+        for (shot in shotIterator){
+            if(shot.second > Constants.BASE_GAME_HEIGHT){
+                shotIterator.remove()
             }
         }
     }
-
-    fun setMoveRight(newBool: Boolean){
-        this.moveRight = newBool
-    }
-
-    fun getMoveRight(): Boolean{
-        return this.moveRight
-    }
-
-    fun setMoveLeft(newBool: Boolean){
-        this.moveLeft = newBool
-    }
-
-    fun getMoveLeft(): Boolean{
-        return this.moveLeft
-    }
-
-    fun getPlayerPoly(): Polygon{
-        return this.playerPoly
-    }
-
-    fun getVerticesForPlayer(): FloatArray{
-        return this.verticesForPlayer
-    }
-
 }

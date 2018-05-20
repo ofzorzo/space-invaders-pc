@@ -30,6 +30,9 @@ class GameRunning(game: SpaceInvadersGame) : SuperScreen(game) {
     private lateinit var enemyHorde: EnemyHorde
     private var currentScore: Int = 0
     private var initialized : Boolean = false
+    private var endGame: Boolean = false
+    private var elapsedTimeSinceEnd: Long = 0
+    private var endTime: Long = 0
 
 
     override fun show(){
@@ -77,59 +80,54 @@ class GameRunning(game: SpaceInvadersGame) : SuperScreen(game) {
         this.currentScore = 0
     }
 
-    private fun drawHorde(){
-        val enemies = this.enemyHorde.getEnemyHorde()
-        for(i in 0..enemies.size-1){
-            val enemy = this.enemyHorde.getEnemyHorde()[i]
-            if (!enemy.wasHit() || enemy.getRecoverTime() % 10 < 5) {
-                game.getSpriteBatch().draw(enemyTexture, enemies[i].getX(), enemies[i].getY())
-            }
-            enemy.decreaseRecoverTime()
-        }
-    }
-
-    private fun drawShots(){
-        val moveShots = this.spaceShip.getShots()
-        for(i in 0..moveShots.size-1){
-            game.getSpriteBatch().draw(shotsTexture, moveShots[i].first, moveShots[i].second)
-        }
-    }
-
     override fun render(delta: Float) {
         Gdx.gl.glClearColor(1.0F,0.0F,0.0F,1.0F)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT) //Remove everything from the screen
 
-        this.spaceShip.move()
-        if(this.enemyHorde.checkEndOfGame())
-            this.game.getScreenManager().updateScreen(Constants.GAME_OVER_ID)
+        //antes de desenhar a nova cena checamos se no último desenho aconteceu alguma colisão ou fim de jogo
+        if(this.enemyHorde.checkEndOfGame()) {
+            if(this.endGame==true && this.elapsedTimeSinceEnd>1000) {
+                this.endGame = false
+                this.game.getScreenManager().updateScreen(Constants.GAME_OVER_ID)
+            }
+            else{
+                if(this.endGame==false)
+                    this.endTime = System.currentTimeMillis()
+                this.endGame = true
+                this.elapsedTimeSinceEnd = System.currentTimeMillis() - this.endTime
+            }
+        }
+        this.enemyHorde.checkCollision()
+
+        if(endGame==false) {
+            //cria e move horda
+            this.enemyHorde.createHordeIfNeeded()
+            this.enemyHorde.moveHorde()
+
+            //move nave do jogador
+            this.spaceShip.move()
+
+            //destrói tiros que saíram da tela e move os demais
+            this.spaceShip.removeOutterShots()
+            this.spaceShip.moveShots()
+        }
 
         game.getSpriteBatch().begin() // needs to be called before draw
         game.getSpriteBatch().draw(bgTexture, 0.0F, 0.0F)
-        game.getSpriteBatch().draw(spaceShipTexture, this.spaceShip.getX(), this.spaceShip.getY())
         this.font.draw(game.getSpriteBatch(), this.currentScore.toString(), Constants.CURRENT_SCORE_X, Constants.CURRENT_SCORE_Y)
         this.font.draw(game.getSpriteBatch(), Constants.SCORE_TEXT, Constants.SCORE_TEXT_X, Constants.SCORE_TEXT_Y)
         this.font.draw(game.getSpriteBatch(), GameInfo.HIGHSCORE.toString(), Constants.HIGHSCORE_X, Constants.HIGHSCORE_Y)
         this.font.draw(game.getSpriteBatch(), Constants.HIGH_TEXT, Constants.HIGH_TEXT_X, Constants.HIGH_TEXT_Y)
 
-        //cria e move horda
-        this.enemyHorde.createHordeIfNeeded()
-        this.enemyHorde.moveHorde()
-
-        //destrói tiros que saíram da tela e move os demais
-        this.spaceShip.removeOutterShots()
-        this.spaceShip.moveShots()
-
         //desenha horda
-        drawHorde()
-        //desenha tiros
-        drawShots()
+        this.enemyHorde.draw(game, enemyTexture)
+
+        //desenha nave e tiros
+        this.spaceShip.draw(game, spaceShipTexture)
 
         game.getSpriteBatch().end() // needs to be called after drawing
         this.playStage.act(Gdx.graphics.deltaTime)
         this.playStage.draw()
-
-        //checamos colisão sempre após desenhar, afinal devemos mostrar que objetos colidiram antes de destruí-los
-        this.enemyHorde.checkCollision()
     }
 
     fun getCurrentScore(): Int {
