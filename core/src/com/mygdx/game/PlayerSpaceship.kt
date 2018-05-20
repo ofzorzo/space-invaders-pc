@@ -30,9 +30,9 @@ class PlayerSpaceship : Spaceship{
     }
 
     override fun moveRight(deltaX: Float){
-        if( (this.moveRight == true) && (this.getX() + deltaX + Constants.SPACESHIP_WIDTH <= Constants.BASE_GAME_WIDTH) ) {
-            this.setPosition(this.getX() + deltaX, this.getY())
-            for (i in 0..this.vertices.size-1) {
+        if(this.moveRight && (this.x + deltaX + Constants.SPACESHIP_WIDTH <= Constants.BASE_GAME_WIDTH)) {
+            this.setPosition(this.x + deltaX, this.y)
+            for (i in 0 until this.vertices.size) {
                 if(i%2 == 0) {
                     this.vertices[i] = this.vertices[i] + deltaX
                     this.updateSpaceshipPoly()
@@ -43,9 +43,9 @@ class PlayerSpaceship : Spaceship{
     }
 
     override fun moveLeft(deltaX: Float){
-        if( (this.moveLeft == true) && (this.getX()+deltaX >= 0) ) {
-            this.setPosition(this.getX()+deltaX, this.getY())
-            for (i in 0..this.vertices.size-1) {
+        if(this.moveLeft && (this.x +deltaX >= 0)) {
+            this.setPosition(this.x +deltaX, this.getY())
+            for (i in 0 until this.vertices.size) {
                 if(i%2 == 0) {
                     this.vertices[i] = this.vertices[i]+deltaX
                     this.updateSpaceshipPoly()
@@ -60,19 +60,19 @@ class PlayerSpaceship : Spaceship{
     }
 
     override fun draw(game: SpaceInvadersGame, texture: Texture) {
-        game.getSpriteBatch().draw(texture, this.getX(), this.getY())
+        game.getSpriteBatch().draw(texture, this.x, this.y)
         drawShots(game)
     }
 
     fun createShot(){
-        val x: Float = Constants.SPACESHIP_WIDTH/2 + this.getX() - 7.0f
+        val x: Float = Constants.SPACESHIP_WIDTH/2 + this.x - 7.0f
         val y: Float = Constants.SPACESHIP_HEIGHT
         shots.add(Pair(x, y))
         this.shotSound.play()
     }
 
     fun moveShots(){
-        for(i in 0..this.shots.size-1){
+        for(i in 0 until this.shots.size){
             this.shots[i] = Pair(this.shots[i].first, this.shots[i].second + Constants.SHOT_SPEED)
         }
     }
@@ -81,8 +81,8 @@ class PlayerSpaceship : Spaceship{
         return this.shots
     }
 
-    fun drawShots(game: SpaceInvadersGame){
-        for(i in 0..this.shots.size-1){
+    private fun drawShots(game: SpaceInvadersGame){
+        for(i in 0 until this.shots.size){
             game.getSpriteBatch().draw(Texture(Pixmap(Gdx.files.internal(Constants.SHOTS_TEXTURE))), this.shots[i].first, this.shots[i].second)
         }
     }

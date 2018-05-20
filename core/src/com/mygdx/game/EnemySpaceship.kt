@@ -2,7 +2,6 @@ package com.mygdx.game
 
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.math.Polygon
-import com.badlogic.gdx.scenes.scene2d.Actor
 import com.mygdx.values.Constants
 
 
@@ -26,7 +25,7 @@ class EnemySpaceship : Spaceship{
     }
 
     override fun draw(game: SpaceInvadersGame, texture: Texture) {
-        game.getSpriteBatch().draw(texture, this.getX(), this.getY())
+        game.getSpriteBatch().draw(texture, this.x, this.y)
     }
 
     override fun move() {
@@ -36,9 +35,9 @@ class EnemySpaceship : Spaceship{
     }
 
     override fun moveLeft(deltaX: Float) {
-        if(this.moveLeft==true) {
-            this.setPosition(this.getX() + deltaX, this.getY())
-            for (j in 0..this.vertices.size - 1)
+        if(this.moveLeft) {
+            this.setPosition(this.x + deltaX, this.y)
+            for (j in 0 until this.vertices.size)
                 if (j % 2 == 0) {
                     this.vertices[j] = this.vertices[j] + deltaX
                     this.updateSpaceshipPoly()
@@ -47,9 +46,9 @@ class EnemySpaceship : Spaceship{
     }
 
     override fun moveRight(deltaX: Float) {
-        if(this.moveRight==true) {
+        if(this.moveRight) {
             this.setPosition(this.getX() + deltaX, this.getY())
-            for (j in 0..this.vertices.size - 1) {
+            for (j in 0 until this.vertices.size) {
                 if (j % 2 == 0) {
                     this.vertices[j] = this.vertices[j] + deltaX
                     this.updateSpaceshipPoly()
@@ -58,10 +57,10 @@ class EnemySpaceship : Spaceship{
         }
     }
 
-    fun changeLanes(){
-        if(this.changeLane==true) {
-            this.setPosition(this.getX(), this.getY() - 18.0f)
-            for (j in 0..this.vertices.size - 1)
+    private fun changeLanes(){
+        if(this.changeLane) {
+            this.setPosition(this.x, this.y - 18.0f)
+            for (j in 0 until this.vertices.size)
                 if (j % 2 != 0) {
                     this.vertices[j] = this.vertices[j] - 18.0f
                     this.updateSpaceshipPoly()

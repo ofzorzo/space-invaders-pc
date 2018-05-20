@@ -4,12 +4,11 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.audio.Sound
 import com.badlogic.gdx.graphics.Texture
 import com.mygdx.values.Constants
-import com.mygdx.game.PlayerSpaceship
 import com.mygdx.screens.GameRunning
 import com.badlogic.gdx.math.Intersector
 import com.badlogic.gdx.math.Polygon
 
-class EnemyHorde(val playerSpaceship: PlayerSpaceship, val gameRunning: GameRunning) {
+class EnemyHorde(private val playerSpaceship: PlayerSpaceship, private val gameRunning: GameRunning) {
 
     private var enemyHorde = mutableListOf< EnemySpaceship >()
     private var difficulty: Int = 0
@@ -36,10 +35,8 @@ class EnemyHorde(val playerSpaceship: PlayerSpaceship, val gameRunning: GameRunn
         }
     }
 
-    fun isEmpty(): Boolean{
-        if (enemyHorde.size == 0)
-            return true
-        else return false
+    private fun isEmpty(): Boolean{
+        return enemyHorde.size == 0
     }
 
     fun getEnemyHorde(): MutableList< EnemySpaceship >{
@@ -48,21 +45,21 @@ class EnemyHorde(val playerSpaceship: PlayerSpaceship, val gameRunning: GameRunn
 
     fun moveHorde(){
         this.changeLane = false
-        for(i in 0..this.enemyHorde.size-1){ // tests if any of the remaining enemy ships hits one of the side walls; if it does, we should change lanes and the movement direction
-            if ( this.moveRight==true && this.enemyHorde[i].getX()+Constants.ENEMY_WIDTH+(2.0f*this.difficulty)>Constants.BASE_GAME_WIDTH-5.0f ) {
+        for(i in 0 until this.enemyHorde.size){ // tests if any of the remaining enemy ships hits one of the side walls; if it does, we should change lanes and the movement direction
+            if (this.moveRight && this.enemyHorde[i].x +Constants.ENEMY_WIDTH+(2.0f*this.difficulty)>Constants.BASE_GAME_WIDTH-5.0f) {
                 this.changeLane = true
                 this.moveLeft = true
                 this.moveRight = false
                 break
             }
-            else if ( this.moveLeft==true && this.enemyHorde[i].getX()-(2.0f*this.difficulty)<5.0f ){
+            else if (this.moveLeft && this.enemyHorde[i].x -(2.0f*this.difficulty)<5.0f){
                 this.changeLane = true
                 this.moveLeft = false
                 this.moveRight = true
                 break
             }
         }
-        for(i in 0..this.enemyHorde.size-1){
+        for(i in 0 until this.enemyHorde.size){
             enemyHorde[i].setChangeLane(this.changeLane)
             enemyHorde[i].setSpeed(2.0f*this.difficulty)
             enemyHorde[i].publicSetMoveRight(this.moveRight)
@@ -93,41 +90,26 @@ class EnemyHorde(val playerSpaceship: PlayerSpaceship, val gameRunning: GameRunn
     fun checkCollision(){
         val shotIterator = this.playerSpaceship.getShots().iterator()
         var collision : Boolean
-        //var index: Int = 0
-        //if(playerSpaceship.getShots().size>0)
-        //    println("\n\niniciou")
         for (shot in shotIterator){
             val enemyIterator = this.enemyHorde.iterator()
             collision = false
-            //println(indexss.toString())
             while (enemyIterator.hasNext() && !collision){
-                //println(index.toString() + "zrz")
                 val enemy = enemyIterator.next()
-                //if(index == 1){
-                //  println(index.toString() + "  shot_x:" + shot.first + "   shot_y:" + shot.second)
-                //  println("enemy_x:" + enemy.getX() + "   enemy_y:" + enemy.getY())}
                 if(collision(enemy, shot.first, shot.second))
                 {
-                    //println("\n\ncolisao")
                     collision = true
                     enemy.publicSetHealth(enemy.publicGetHealth()-1)
-                    //println("nro anterior de enemies: " + this.enemyHorde.size)
                     if(enemy.publicGetHealth()==0) {
                         enemyIterator.remove()
                         gameRunning.setCurrentScore(gameRunning.getCurrentScore() + 50)
                     }
                     else
                         enemy.takeDamage()
-                    //println("nro posterior de enemies: " + this.enemyHorde.size)
 
                     this.explosionSound.play()
-                    //println("nro anterior de tiros: " + this.playerSpaceship.getShots().size)
                     shotIterator.remove()
-                    //println("nro posterior de tiros: " + this.playerSpaceship.getShots().size)
-                    //println("fim colisao")
                 }
             }
-            //index = index + 1
         }
         val enemyIterator = this.enemyHorde.iterator()
         for (enemy in enemyIterator){
@@ -141,7 +123,7 @@ class EnemyHorde(val playerSpaceship: PlayerSpaceship, val gameRunning: GameRunn
     fun checkEndOfGame(): Boolean {
         val enemyIterator = this.enemyHorde.iterator()
         for (enemy in enemyIterator) {
-            if (enemy.getY() <= 0)
+            if (enemy.y <= 0)
                 return true
             if(this.playerSpaceship.publicGetHealth()<1)
             {
@@ -153,7 +135,7 @@ class EnemyHorde(val playerSpaceship: PlayerSpaceship, val gameRunning: GameRunn
     }
 
     fun draw(game: SpaceInvadersGame, texture: Texture){
-        for(i in 0..this.enemyHorde.size-1){
+        for(i in 0 until this.enemyHorde.size){
             val enemy = this.enemyHorde[i]
             if (!enemy.wasHit() || enemy.getRecoverTime() % 10 < 5) {
                 this.enemyHorde[i].draw(game, texture)

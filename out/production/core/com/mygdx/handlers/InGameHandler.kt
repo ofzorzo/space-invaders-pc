@@ -11,8 +11,8 @@ class InGameHandler(val spaceShip: PlayerSpaceship, val game: SpaceInvadersGame)
 
     override fun keyDown(event: InputEvent?, keycode: Int): Boolean {
         when (keycode) {
-            Constants.RIGHT_ARROW -> this.spaceShip.setMoveRight(true)
-            Constants.LEFT_ARROW -> this.spaceShip.setMoveLeft(true)
+            Constants.RIGHT_ARROW -> this.spaceShip.publicSetMoveRight(true)
+            Constants.LEFT_ARROW -> this.spaceShip.publicSetMoveLeft(true)
             Constants.SPACE_KEY -> this.spaceShip.createShot()
             Constants.PAUSE_KEY, Constants.ESC_KEY ->
                 this.game.getScreenManager().updateScreen(Constants.PAUSE_ID)
@@ -23,9 +23,9 @@ class InGameHandler(val spaceShip: PlayerSpaceship, val game: SpaceInvadersGame)
 
     override fun keyUp(event: InputEvent?, keycode: Int): Boolean {
         if (keycode==22)
-            this.spaceShip.setMoveRight(false)
+            this.spaceShip.publicSetMoveRight(false)
         if (keycode==21)
-            this.spaceShip.setMoveLeft(false)
+            this.spaceShip.publicSetMoveLeft(false)
         return super.keyUp(event, keycode)
     }
 
