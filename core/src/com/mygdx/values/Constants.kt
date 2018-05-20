@@ -106,7 +106,7 @@ object Constants {
 
     const val SCORE_TEXT = "SCORE: "
     const val SCORE_TEXT_X = 15.0F
-    const val SCORE_TEXT_Y = 785.0f
+    const val SCORE_TEXT_Y = 740.0f
 
     const val CURRENT_SCORE_X = 143.0f
     const val CURRENT_SCORE_Y = SCORE_TEXT_Y
