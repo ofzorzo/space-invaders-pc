@@ -4,10 +4,11 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.audio.Sound
 import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.Polygon
-import com.badlogic.gdx.scenes.scene2d.Actor
 import com.mygdx.handlers.InGameHandler
 import com.mygdx.values.Constants
+import java.lang.Math.atan
 
 
 class PlayerSpaceship : Spaceship{
@@ -17,7 +18,7 @@ class PlayerSpaceship : Spaceship{
     override var poly = Polygon()
     override var moveRight: Boolean = false
     override var moveLeft: Boolean = false
-    private var shots = mutableListOf< Pair<Float, Float> >()
+    private var shots = mutableListOf<Shoot> ()
     private var shotSound: Sound
 
 
@@ -64,34 +65,51 @@ class PlayerSpaceship : Spaceship{
         drawShots(game)
     }
 
-    fun createShot(){
+    fun createShot(speedX: Float, speedY: Float){
         val x: Float = Constants.SPACESHIP_WIDTH/2 + this.x - 7.0f
         val y: Float = Constants.SPACESHIP_HEIGHT
-        shots.add(Pair(x, y))
+        shots.add(Shoot(x, y, speedX, speedY))
         this.shotSound.play()
     }
 
     fun moveShots(){
-        for(i in 0 until this.shots.size){
-            this.shots[i] = Pair(this.shots[i].first, this.shots[i].second + Constants.SHOT_SPEED)
+        this.shots.forEach {
+            it.move()
         }
     }
 
-    fun getShots(): MutableList<Pair<Float, Float>> {
+    fun getShots(): MutableList<Shoot> {
         return this.shots
     }
 
     private fun drawShots(game: SpaceInvadersGame){
-        for(i in 0 until this.shots.size){
-            game.getSpriteBatch().draw(Texture(Pixmap(Gdx.files.internal(Constants.SHOTS_TEXTURE))), this.shots[i].first, this.shots[i].second)
+
+        shots.forEach {
+
+
+            game.getSpriteBatch().draw(TextureRegion(Texture(Pixmap(Gdx.files.internal(Constants.SHOTS_TEXTURE)))),
+                    it.x, it.y, (Constants.SHOT_WIDTH/2).toFloat(), (Constants.SHOT_HEIGHT/2).toFloat(),
+                    Constants.SHOT_WIDTH.toFloat(), Constants.SHOT_HEIGHT.toFloat(), 1.0f, 1.0f, it.getAngle())
         }
+
     }
 
     fun removeOutterShots(){
         val shotIterator = this.shots.iterator()
         for (shot in shotIterator){
-            if(shot.second > Constants.BASE_GAME_HEIGHT){
+            if(shot.y > Constants.BASE_GAME_HEIGHT){
                 shotIterator.remove()
+            }
+        }
+    }
+
+    fun mouseMove(x: Float) {
+        val speed = x - this.x
+        this.setPosition(x.toFloat(), this.y)
+        for (i in 0 until this.vertices.size) {
+            if(i%2 == 0) {
+                this.vertices[i] = this.vertices[i]+speed
+                this.updateSpaceshipPoly()
             }
         }
     }

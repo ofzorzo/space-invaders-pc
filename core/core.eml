@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component inherit-compiler-output="true" inheritJdk="true">
+	<output-test url="file://$MODULE_DIR$/../out/test/core"/>
+	<exclude-output/>
+	<contentEntry url="file://$MODULE_DIR$">
+		<excludeFolder url="file://$MODULE_DIR$/.gradle"/>
+		<excludeFolder url="file://$MODULE_DIR$/build"/>
+	</contentEntry>
+	<lib name="gdx-1.9.8.jar" scope="COMPILE">
+		<srcroot url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.9.8/bac17f395be5010619b31280fe84e9f53118d0b9/gdx-1.9.8-sources.jar!/"/>
+	</lib>
+	<lib name="gdx-box2d-1.9.8.jar" scope="COMPILE">
+		<srcroot url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-box2d/1.9.8/1fd1df309f965e52196900b270afc2bcd0acd0a2/gdx-box2d-1.9.8-sources.jar!/"/>
+	</lib>
+	<levels>
+		<level name="KotlinJavaRuntime" value="project"/>
+	</levels>
+</component>

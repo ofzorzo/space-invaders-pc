@@ -18,6 +18,12 @@ object GameInfo {
     var CURRENT_STATE = Constants.MAIN_MENU_ID
     var PREVIOUS_STATE = Constants.MAIN_MENU_ID
 
+    //interarions
+
+
+    var MOVEMENT = Constants.ARROWS_ID
+    var SHOOT = Constants.SPACE_KEY_ID
+
 
 
 }

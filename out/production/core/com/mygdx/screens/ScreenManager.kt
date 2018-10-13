@@ -13,7 +13,7 @@ class ScreenManager {
     private var game_running_screen : GameRunning
     private var main_menu_screen : MainMenu
     private var pause_screen : Pause
-    private var help_screen : HelpScreen
+    private var settings_screen : SettingsScreen
     private var mainMenuMusic: Music
     private var gameMusic: Music
     private var gameOverMusic : Music
@@ -25,7 +25,7 @@ class ScreenManager {
         this.game_over_screen = GameOver(game)
         this.main_menu_screen = MainMenu(game)
         this.pause_screen = Pause(game)
-        this.help_screen = HelpScreen(game)
+        this.settings_screen = SettingsScreen(game)
 
         //MENU MUSIC
         this.mainMenuMusic = Gdx.audio.newMusic(Gdx.files.internal(Constants.MAIN_MENU_MUSIC))
@@ -57,7 +57,7 @@ class ScreenManager {
                     Constants.GAME_RUNNING_ID -> this.game_running_screen
                     Constants.PAUSE_ID -> this.pause_screen
                     Constants.MAIN_MENU_ID -> this.main_menu_screen
-                    Constants.HELP_ID -> this.help_screen
+                    Constants.SETTINGS_ID -> this.settings_screen
                     else -> this.game.screen
                 }
 

@@ -12,7 +12,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import com.mygdx.game.SpaceInvadersGame
 import com.mygdx.handlers.AgainHandler
-import com.mygdx.handlers.HelpHandler
 import com.mygdx.handlers.HighScoreHandler
 import com.mygdx.handlers.QuitHandler
 import com.mygdx.values.Constants

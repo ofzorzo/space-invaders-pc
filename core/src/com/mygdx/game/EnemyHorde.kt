@@ -95,7 +95,7 @@ class EnemyHorde(private val playerSpaceship: PlayerSpaceship, private val gameR
             collision = false
             while (enemyIterator.hasNext() && !collision){
                 val enemy = enemyIterator.next()
-                if(collision(enemy, shot.first, shot.second))
+                if(collision(enemy, shot.x, shot.y))
                 {
                     collision = true
                     enemy.publicSetHealth(enemy.publicGetHealth()-1)

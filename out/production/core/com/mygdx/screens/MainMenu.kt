@@ -1,7 +1,6 @@
 package com.mygdx.screens
 
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.audio.Music
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.Texture
@@ -12,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import com.mygdx.game.SpaceInvadersGame
-import com.mygdx.handlers.HelpHandler
+import com.mygdx.handlers.SettingsHandler
 import com.mygdx.handlers.PlayHandler
 import com.mygdx.handlers.QuitHandler
 import com.mygdx.values.Constants
@@ -21,7 +20,7 @@ import com.mygdx.values.GameInfo
 class MainMenu(game: SpaceInvadersGame) : SuperScreen(game) {
     private lateinit var bgTexture : Texture
     private lateinit var playButton : ImageButton
-    private lateinit var helpButton : ImageButton
+    private lateinit var settingsButton : ImageButton
     private lateinit var quitButton : ImageButton
     private lateinit var mainMenuStage : Stage
     private lateinit var font : BitmapFont
@@ -51,13 +50,13 @@ class MainMenu(game: SpaceInvadersGame) : SuperScreen(game) {
         this.playButton.setPosition(Constants.PLAY_BUTTON_X, Constants.PLAY_BUTTON_Y)
         this.playButton.setSize(Constants.BUTTON_WIDTH, Constants.BUTTON_HEIGHT)
 
-        //HELP BUTTON
-        val helpTexture = Texture(Constants.HELP_BUT)
-        val helpTextureRegDrawable = TextureRegionDrawable(TextureRegion(helpTexture))
-        this.helpButton = ImageButton(helpTextureRegDrawable)
-        this.helpButton.addListener(HelpHandler(this.game))
-        this.helpButton.setPosition(Constants.HELP_BUTTON_X, Constants.HELP_BUTTON_Y)
-        this.helpButton.setSize(Constants.BUTTON_WIDTH, Constants.BUTTON_HEIGHT)
+        //SETTINGS BUTTON
+        val settingsTexture = Texture(Constants.SETTINGS_BUT)
+        val settingsTextureRegDrawable = TextureRegionDrawable(TextureRegion(settingsTexture))
+        this.settingsButton = ImageButton(settingsTextureRegDrawable)
+        this.settingsButton.addListener(SettingsHandler(this.game))
+        this.settingsButton.setPosition(Constants.SETTINGS_BUTTON_X, Constants.SETTINGS_BUTTON_Y)
+        this.settingsButton.setSize(Constants.BUTTON_WIDTH, Constants.BUTTON_HEIGHT)
 
         //QUIT BUTTON
         val quitTexture = Texture(Constants.QUIT_BUT)
@@ -72,7 +71,7 @@ class MainMenu(game: SpaceInvadersGame) : SuperScreen(game) {
         this.mainMenuStage = Stage(ScreenViewport())
         // Express that the buttons will act on this screen's stage
         this.mainMenuStage.addActor(this.playButton)
-        this.mainMenuStage.addActor(this.helpButton)
+        this.mainMenuStage.addActor(this.settingsButton)
         this.mainMenuStage.addActor(this.quitButton)
         Gdx.input.inputProcessor = this.mainMenuStage
 
