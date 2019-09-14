@@ -28,7 +28,7 @@ class EnemyHorde(private val playerSpaceship: PlayerSpaceship, private val gameR
                 for (column in 0..4) {
                     x = Constants.HORDE_X + (column * Constants.ENEMY_WIDTH) + (column * Constants.SPACE_BETWEEN_COLUMNS_OF_ENEMIES)
                     y = Constants.HORDE_Y + (line * Constants.ENEMY_HEIGHT)
-                    health = this.difficulty
+                    health = 1 //this.difficulty
                     this.enemyHorde.add(EnemySpaceship(x, y, health))
                 }
             }
@@ -61,7 +61,7 @@ class EnemyHorde(private val playerSpaceship: PlayerSpaceship, private val gameR
         }
         for(i in 0 until this.enemyHorde.size){
             enemyHorde[i].setChangeLane(this.changeLane)
-            enemyHorde[i].setSpeed(2.0f*this.difficulty)
+            enemyHorde[i].setSpeed(2.25f*this.difficulty)
             enemyHorde[i].publicSetMoveRight(this.moveRight)
             enemyHorde[i].publicSetMoveLeft(this.moveLeft)
             this.enemyHorde[i].move()

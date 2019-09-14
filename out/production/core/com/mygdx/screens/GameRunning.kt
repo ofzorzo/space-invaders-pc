@@ -125,6 +125,10 @@ class GameRunning(game: SpaceInvadersGame) : SuperScreen(game) {
         //desenha nave e tiros
         this.spaceShip.draw(game, spaceShipTexture)
 
+        if(GameInfo.MOVEMENT == Constants.MOUSE_MOV_ID){
+            this.spaceShip.mouseMove(Gdx.input.x - (Constants.SPACESHIP_WIDTH/2).toInt())
+
+        }
         game.getSpriteBatch().end() // needs to be called after drawing
         this.playStage.act(Gdx.graphics.deltaTime)
         this.playStage.draw()
@@ -150,7 +154,7 @@ class GameRunning(game: SpaceInvadersGame) : SuperScreen(game) {
     override fun resume() {
 
         if (GameInfo.SHOOT == Constants.MOUSE_CLICK_ID) {
-            Gdx.graphics.setCursor(Gdx.graphics.newCursor(this.aim, 16, 16))
+            Gdx.graphics.setCursor(Gdx.graphics.newCursor(this.aim, 28, 44))
         }else {
             Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Arrow)
         }

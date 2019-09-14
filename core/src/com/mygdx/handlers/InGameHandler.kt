@@ -14,14 +14,15 @@ class InGameHandler(val spaceShip: PlayerSpaceship, val game: SpaceInvadersGame)
     private var previousY = Constants.SPACESHIP_INITIAL_Y_POS
     override fun keyDown(event: InputEvent?, keycode: Int): Boolean {
         when{
-            keycode == Constants.RIGHT_ARROW && GameInfo.MOVEMENT == Constants.ARROWS_ID->
+            (keycode == Constants.RIGHT_ARROW || keycode == 32)&& GameInfo.MOVEMENT == Constants.ARROWS_ID->
                 this.spaceShip.publicSetMoveRight(true)
-            keycode == Constants.LEFT_ARROW && GameInfo.MOVEMENT == Constants.ARROWS_ID->
+            (keycode == Constants.LEFT_ARROW || keycode == 29) && GameInfo.MOVEMENT == Constants.ARROWS_ID->
                 this.spaceShip.publicSetMoveLeft(true)
             keycode == Constants.SPACE_KEY && GameInfo.SHOOT == Constants.SPACE_KEY_ID->
                 this.spaceShip.createShot(0.0f, Constants.SHOT_SPEED)
             keycode == Constants.PAUSE_KEY || keycode == Constants.ESC_KEY ->
                 this.game.getScreenManager().updateScreen(Constants.PAUSE_ID)
+            else -> {println(keycode)}
         }
         return super.keyDown(event, keycode)
     }
@@ -37,17 +38,11 @@ class InGameHandler(val spaceShip: PlayerSpaceship, val game: SpaceInvadersGame)
         return super.touchDown(event, x, y, pointer, button)
     }
 
-    //A distância da posição anterior para a posição atual vai definir uma velocidade para a nave
-    override fun mouseMoved(event: InputEvent?, x: Float, y: Float): Boolean {
-        if(GameInfo.MOVEMENT == Constants.MOUSE_MOV_ID)
-            this.spaceShip.mouseMove(x-16.0f)
-        return super.mouseMoved(event, x, y)
-    }
 
     override fun keyUp(event: InputEvent?, keycode: Int): Boolean {
-        if (keycode==22)
+        if (keycode==22 || keycode == 32)
             this.spaceShip.publicSetMoveRight(false)
-        if (keycode==21)
+        if (keycode==21 || keycode == 29)
             this.spaceShip.publicSetMoveLeft(false)
         return super.keyUp(event, keycode)
     }

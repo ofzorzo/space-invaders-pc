@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.Polygon
 import com.mygdx.handlers.InGameHandler
 import com.mygdx.values.Constants
-import java.lang.Math.atan
 
 
 class PlayerSpaceship : Spaceship{
@@ -20,6 +19,7 @@ class PlayerSpaceship : Spaceship{
     override var moveLeft: Boolean = false
     private var shots = mutableListOf<Shoot> ()
     private var shotSound: Sound
+    private var timeLastShot: Long
 
 
     constructor(game: SpaceInvadersGame) : super(){
@@ -28,6 +28,7 @@ class PlayerSpaceship : Spaceship{
         this.addListener(InGameHandler(this, game))
         this.shotSound = Gdx.audio.newSound(Gdx.files.internal(Constants.SHOT_SOUND))
         this.updateSpaceshipPoly()
+        this.timeLastShot = 0
     }
 
     override fun moveRight(deltaX: Float){
@@ -66,10 +67,14 @@ class PlayerSpaceship : Spaceship{
     }
 
     fun createShot(speedX: Float, speedY: Float){
-        val x: Float = Constants.SPACESHIP_WIDTH/2 + this.x - 7.0f
-        val y: Float = Constants.SPACESHIP_HEIGHT
-        shots.add(Shoot(x, y, speedX, speedY))
-        this.shotSound.play()
+        val currentTime: Long = System.currentTimeMillis()
+        if((currentTime - this.timeLastShot) >= 200) {
+            val x: Float = Constants.SPACESHIP_WIDTH / 2 + this.x - 7.0f
+            val y: Float = Constants.SPACESHIP_HEIGHT
+            shots.add(Shoot(x, y, speedX, speedY))
+            this.shotSound.play()
+            this.timeLastShot = System.currentTimeMillis()
+        }
     }
 
     fun moveShots(){
@@ -103,9 +108,9 @@ class PlayerSpaceship : Spaceship{
         }
     }
 
-    fun mouseMove(x: Float) {
-        val speed = x - this.x
-        this.setPosition(x.toFloat(), this.y)
+    fun mouseMove(x: Int) {
+        val speed = (x - this.x) / 20
+        this.setPosition(this.x + speed, this.y)
         for (i in 0 until this.vertices.size) {
             if(i%2 == 0) {
                 this.vertices[i] = this.vertices[i]+speed

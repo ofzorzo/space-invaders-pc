@@ -20,7 +20,7 @@ object Constants {
     const val ENEMY_HEIGHT = 73.0f
 
     const val MOVEMENT_SPEED = 5.0f // número de pixels com que a nave é movida a cada novo frame
-    const val SHOT_SPEED = 20.0f
+    const val SHOT_SPEED = 50.0f
 
     const val SHOT_HEIGHT = 27
     const val SHOT_WIDTH = 8
@@ -135,7 +135,7 @@ object Constants {
     const val MOUSE_CLICK_RADIO_X = ARROW_RADIO_X
     const val SCORE_TEXT = "SCORE: "
     const val SCORE_TEXT_X = 15.0F
-    const val SCORE_TEXT_Y = 740.0f
+    const val SCORE_TEXT_Y = 790.0f
 
     //RADIOS IDS
     const val ARROWS_ID = 0
